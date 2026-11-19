@@ -153,6 +153,11 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
    <label>خط النص</label><select data-k="bf" id="bfSel"></select>
    <label>حجم العنوان</label><input type="range" min="0.6" max="1.5" step="0.05" data-k="ts">
    <h3>الزخرفة</h3><div class="chips" id="patChips"></div>
+   <h3>تأثير العنوان</h3><div class="chips" id="tfxChips"></div>
+   <h3>الفاصل الزخرفي</h3><div class="chips" id="dvChips"></div>
+   <h3>أجواء الخلفية</h3>
+   <label class="chk"><input type="checkbox" data-k="glow"> إضاءة ناعمة من الأعلى</label>
+   <label class="chk"><input type="checkbox" data-k="vig"> تعتيم الأطراف (فينيت)</label>
    <h3>الإطار</h3><div class="chips" id="frameChips"></div>
    <h3>المحاذاة</h3><div class="chips" id="alignChips"></div>
    <label class="chk"><input type="checkbox" data-k="basmala"> إظهار البسملة</label>
@@ -3130,6 +3135,8 @@ function draw0(){
   ctx.save();ctx.globalAlpha=S.bgDim;ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.restore();
  }
  if(S.lay==='mem'){drawMem(ctx,W,H,u,pal);ctx.restore();$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
+ if(S.glow){var gl=ctx.createRadialGradient(W/2,H*0.25,0,W/2,H*0.25,Math.max(W,H)*0.75);gl.addColorStop(0,pal.light?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.18)');gl.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=gl;ctx.fillRect(0,0,W,H)}
+ if(S.vig){var vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.35,W/2,H/2,Math.hypot(W,H)/2);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,pal.light?'rgba(60,40,10,0.22)':'rgba(0,0,0,0.5)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H)}
  if(S.pat==='waves')waves(ctx,W,H,u,pal.accent);
  else if(S.pat!=='none'){
   ctx.save();ctx.globalAlpha=pal.light?0.16:0.11;
@@ -3152,12 +3159,16 @@ function draw0(){
  var dets=S.d.filter(function(r){return String(r.v).trim()});
  function build(s){
   var B=[];
-  function txt(text,fam,wt,size,color,lh,gap,alpha,dir){
+  function txt(text,fam,wt,size,color,lh,gap,alpha,dir,fx){
    fnt(ctx,fam,wt,size);var lines=wrap(ctx,text,cw),lhp=size*lh;
    B.push({h:lines.length*lhp,gap:gap,draw:function(y){
     ctx.save();fnt(ctx,fam,wt,size);ctx.fillStyle=color;if(alpha)ctx.globalAlpha=alpha;
     ctx.direction=dir||'rtl';ctx.textAlign=center?'center':'right';ctx.textBaseline='middle';
-    lines.forEach(function(l,i){ctx.fillText(l,ax,y+lhp*(i+0.5))});ctx.restore();
+    if(fx==='gold'){var gg=ctx.createLinearGradient(0,y,0,y+lines.length*lhp);gg.addColorStop(0,'#fff6cf');gg.addColorStop(0.45,pal.accent);gg.addColorStop(1,'#7d5a12');ctx.fillStyle=gg}
+    else if(fx==='shadow'){ctx.shadowColor='rgba(0,0,0,0.55)';ctx.shadowBlur=size*0.16;ctx.shadowOffsetY=size*0.06}
+    else if(fx==='glow'){ctx.shadowColor=pal.accent;ctx.shadowBlur=size*0.45}
+    else if(fx==='outline'){ctx.lineJoin='round';ctx.strokeStyle=pal.accent;ctx.lineWidth=Math.max(2,size*0.05)}
+    lines.forEach(function(l,i){if(fx==='outline')ctx.strokeText(l,ax,y+lhp*(i+0.5));ctx.fillText(l,ax,y+lhp*(i+0.5))});ctx.restore();
    }});
   }
   if(logoImg&&!wide){
@@ -3166,7 +3177,7 @@ function draw0(){
   }
   if(S.org&&String(S.org).trim())txt(S.org,S.hf,'700',u*0.03*s,pal.accent,1.4,u*0.014*s);
   if(S.basmala)txt('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ','Amiri','700',u*0.04*s,pal.ink,1.5,u*0.018*s,0.95);
-  if(String(S.title).trim())txt(S.title,S.hf,'700',u*0.088*s*S.ts,pal.title,1.3,u*0.012*s);
+  if(String(S.title).trim())txt(S.title,S.hf,'700',u*0.088*s*S.ts,pal.title,1.3,u*0.012*s,0,'rtl',S.tfx);
   if(String(S.titleFr||'').trim())txt(S.titleFr,'Cairo','700',u*0.04*s,pal.title,1.35,u*0.012*s,0.92,'ltr');
   if(!hideDiv)B.push({h:u*0.03*s,gap:u*0.012*s,draw:function(y){
    ctx.save();ctx.strokeStyle=pal.accent;ctx.fillStyle=pal.accent;ctx.lineWidth=Math.max(2,u*0.003);
@@ -3175,7 +3186,16 @@ function draw0(){
    ctx.beginPath();
    if(center){ctx.moveTo(cx-gp,cy);ctx.lineTo(cx-gp-L,cy);ctx.moveTo(cx+gp,cy);ctx.lineTo(cx+gp+L,cy)}
    else{ctx.moveTo(dc-gp,cy);ctx.lineTo(dc-gp-L*1.4,cy)}
-   ctx.stroke();ctx.translate(dc,cy);ctx.rotate(Math.PI/4);ctx.fillRect(-d,-d,2*d,2*d);ctx.restore();
+   ctx.stroke();
+   var dvk=S.dv||'diamond';
+   function ln(o){ctx.beginPath();if(center){ctx.moveTo(cx-gp,cy+o);ctx.lineTo(cx-gp-L,cy+o);ctx.moveTo(cx+gp,cy+o);ctx.lineTo(cx+gp+L,cy+o)}else{ctx.moveTo(dc-gp,cy+o);ctx.lineTo(dc-gp-L*1.4,cy+o)}ctx.stroke()}
+   if(dvk==='double'){ctx.lineWidth=Math.max(1,u*0.0016);ln(-u*0.005);ln(u*0.005)}
+   ctx.translate(dc,cy);
+   if(dvk==='star'){ctx.beginPath();for(var si=0;si<16;si++){var sr=si%2?d*1.15:d*2.5,sa=Math.PI/8*si-Math.PI/2;ctx.lineTo(Math.cos(sa)*sr,Math.sin(sa)*sr)}ctx.closePath();ctx.fill()}
+   else if(dvk==='dots'){[-1,0,1].forEach(function(k){ctx.beginPath();ctx.arc(k*d*2.6,0,d*(k?0.7:1.1),0,6.3);ctx.fill()})}
+   else if(dvk==='crescent'){ctx.beginPath();ctx.arc(0,0,d*2,0,6.3);ctx.arc(d*0.8,-d*0.3,d*1.7,0,6.3,true);ctx.fill('evenodd');ctx.beginPath();ctx.arc(d*1.9,-d*0.2,d*0.45,0,6.3);ctx.fill()}
+   else{ctx.rotate(Math.PI/4);ctx.fillRect(-d,-d,2*d,2*d)}
+   ctx.restore();
   }});
   if(String(S.sub).trim())txt(S.sub,S.hf,'700',u*0.043*s,pal.accent,1.45,u*0.016*s);
   if(String(S.subFr||'').trim())txt(S.subFr,'Cairo','600',u*0.028*s,pal.accent,1.45,u*0.016*s,0,'ltr');
@@ -3284,12 +3304,13 @@ function chips(el,items,key,lab){
  });
 }
 function syncChips(){
- [['#logoShapeChips','logoShape'],['#kindChips','kind'],['#sideChips','side'],['#colChips','cols'],['#layChips','lay'],['#fmtChips','fmt'],['#patChips','pat'],['#frameChips','frame'],['#alignChips','align'],['#palChips','pal']].forEach(function(p){
+ [['#logoShapeChips','logoShape'],['#kindChips','kind'],['#sideChips','side'],['#colChips','cols'],['#layChips','lay'],['#fmtChips','fmt'],['#patChips','pat'],['#tfxChips','tfx'],['#dvChips','dv'],['#frameChips','frame'],['#alignChips','align'],['#palChips','pal']].forEach(function(p){
   $$(p[0]+' [data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===S[p[1]])});
  });
  $$('#tplGrid .tpl').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-v')===S.tpl)});
 }
 function syncUI(){
+ if(!S.tfx)S.tfx='none';if(!S.dv)S.dv='diamond';
  $$('[data-k]').forEach(function(el){
   var k=el.getAttribute('data-k');
   if(el.type==='checkbox')el.checked=!!S[k];else el.value=S[k]==null?'':S[k];
@@ -3316,7 +3337,7 @@ function syncUI(){
  chips($('#colChips'),[['1','١ في الصف'],['2','٢ في الصف'],['3','٣ في الصف']],'cols');
  chips($('#layChips'),[['std','عادي'],['bi','ثنائي اللغة (عربي | فرنسي)'],['mem','بطاقة عضوية (وجه/ظهر)']],'lay');
  chips($('#fmtChips'),FORMATS.map(function(f){return [f.id,f.n]}),'fmt');
- chips($('#patChips'),PATS,'pat');chips($('#frameChips'),FRAMES,'frame');chips($('#alignChips'),ALIGNS,'align');
+ chips($('#patChips'),PATS,'pat');chips($('#tfxChips'),[['none','بلا تأثير'],['gold','ذهبي متدرّج'],['shadow','ظل'],['glow','توهّج'],['outline','حدّ ملوّن']],'tfx');chips($('#dvChips'),[['diamond','معيّن'],['double','خطّان'],['star','نجمة'],['dots','نقاط'],['crescent','هلال']],'dv');chips($('#frameChips'),FRAMES,'frame');chips($('#alignChips'),ALIGNS,'align');
  var pc=$('#palChips');
  Object.keys(PAL).forEach(function(id){
   var p=PAL[id],b=document.createElement('button');b.type='button';b.className='sw';b.title=p.n;b.setAttribute('aria-label',p.n);
@@ -3565,14 +3586,18 @@ function drawEl(ctx,e,W,H,u,pal){
  }else if(e.type==='image'){
   var im=getImg(e.src);if(!im)return;
   var sh=e.shape||'none';
-  if(sh==='circle'){
-   var d=Math.min(w,h);ctx.save();ctx.beginPath();ctx.arc(0,0,d/2,0,6.3);ctx.clip();
-   var r=Math.max(d/im.width,d/im.height);ctx.drawImage(im,-im.width*r/2,-im.height*r/2,im.width*r,im.height*r);ctx.restore();
-   if(e.ring){ctx.strokeStyle=e.c||pal.accent;ctx.lineWidth=Math.max(2,d*0.04);ctx.beginPath();ctx.arc(0,0,d/2,0,6.3);ctx.stroke()}
-  }else if(sh==='round'){
-   ctx.save();rr(ctx,-w/2,-h/2,w,h,Math.min(w,h)*0.12);ctx.clip();ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();
-   if(e.ring){ctx.strokeStyle=e.c||pal.accent;ctx.lineWidth=Math.max(2,w*0.02);rr(ctx,-w/2,-h/2,w,h,Math.min(w,h)*0.12);ctx.stroke()}
-  }else ctx.drawImage(im,-w/2,-h/2,w,h);
+  var sp=function(){ctx.beginPath();
+   if(sh==='circle'){ctx.arc(0,0,Math.min(w,h)/2,0,6.3)}
+   else if(sh==='oval')ctx.ellipse(0,0,w/2,h/2,0,0,6.3);
+   else if(sh==='arch'){var ar=w/2;ctx.moveTo(-w/2,h/2);ctx.lineTo(-w/2,-h/2+ar);ctx.arc(0,-h/2+ar,ar,Math.PI,0);ctx.lineTo(w/2,h/2);ctx.closePath()}
+   else if(sh==='hex'){for(var hi=0;hi<6;hi++){var ha=Math.PI/3*hi-Math.PI/2,hx=Math.cos(ha)*w/2,hy=Math.sin(ha)*h/2;hi?ctx.lineTo(hx,hy):ctx.moveTo(hx,hy)}ctx.closePath()}
+   else if(sh==='round')rr(ctx,-w/2,-h/2,w,h,Math.min(w,h)*0.12);
+   else ctx.rect(-w/2,-h/2,w,h)};
+  var cw2=sh==='circle'?Math.min(w,h):w,ch2=sh==='circle'?Math.min(w,h):h;
+  if(e.sh){ctx.save();ctx.shadowColor='rgba(0,0,0,0.5)';ctx.shadowBlur=u*0.035;ctx.shadowOffsetY=u*0.012;sp();ctx.fillStyle='#fff';ctx.fill();ctx.restore()}
+  ctx.save();sp();ctx.clip();var cr=Math.max(cw2/im.width,ch2/im.height);ctx.drawImage(im,-im.width*cr/2,-im.height*cr/2,im.width*cr,im.height*cr);ctx.restore();
+  if(e.ring){ctx.strokeStyle=e.c||pal.accent;ctx.lineWidth=Math.max(2,cw2*0.03);sp();ctx.stroke();
+   if(e.ring2){ctx.save();ctx.scale(0.92,0.92);ctx.lineWidth=Math.max(1,cw2*0.009);sp();ctx.stroke();ctx.restore()}}
  }else if(e.type==='shape'){
   ctx.fillStyle=e.c;ctx.strokeStyle=e.c;ctx.lineWidth=Math.max(1,e.lw*u);
   if(e.kind==='line')ctx.fillRect(-w/2,-Math.max(1,e.lw*u)/2,w,Math.max(1,e.lw*u));
@@ -3692,8 +3717,10 @@ function renderProps(){
   chp('المحاذاة',[['right','يمين'],['center','وسط'],['left','يسار']],function(){return e.al||'center'},function(v){e.al=v});
  }else if(e.type==='image'){
   rng('الحجم',0.03,1.2,0.01,function(){return e.w},function(v){e.w=v});
-  chp('الشكل',[['none','بلا إطار'],['circle','دائري'],['round','مستدير']],function(){return e.shape||'none'},function(v){e.shape=v});
+  chp('الشكل',[['none','بلا إطار'],['circle','دائري'],['round','مستدير'],['arch','قوس محراب'],['oval','بيضاوي'],['hex','سداسي']],function(){return e.shape||'none'},function(v){e.shape=v});
   chk('إطار ملوّن',function(){return e.ring},function(v){e.ring=v});
+  chk('إطار ثانٍ رفيع',function(){return e.ring2},function(v){e.ring2=v});
+  chk('ظل خلف الصورة',function(){return e.sh},function(v){e.sh=v});
   col('لون الإطار',function(){return e.c||'#b8891f'},function(v){e.c=v});
   act('إزالة الخلفية البيضاء',function(){whiteOut(e.src,function(d){e.src=d;e.shape='none';change();renderProps()})});
   act('استبدال الصورة',function(){replaceId=e.id;$('#imgFile').click()});
