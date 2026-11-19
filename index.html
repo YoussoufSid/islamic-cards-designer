@@ -189,6 +189,16 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
   </div>
 
   <div class="pane" data-pane="org">
+   <h3>العناوين وأرقام الهاتف</h3>
+   <p class="note">املأ البيانات مرة واحدة، فتظهر تلقائيًا في أسفل كل تصميم (عربي وفرنسي)، وتُحفظ مع ملف جهتك.</p>
+   <label>العنوان</label><input type="text" data-k="addr" id="fAddr" placeholder="مثال: باماكو، داودابو، قرب ...">
+   <label>العنوان بالفرنسية (اختياري)</label><input type="text" data-k="addrFr" id="fAddrFr" dir="ltr" placeholder="Bamako, Daoudabougou, ...">
+   <label>هاتف ١</label><input type="tel" data-k="ph1" id="fPh1" dir="ltr" placeholder="+223 .. .. .. ..">
+   <label>هاتف ٢</label><input type="tel" data-k="ph2" id="fPh2" dir="ltr" placeholder="+223 .. .. .. ..">
+   <label>واتساب</label><input type="tel" data-k="wa" id="fWa" dir="ltr" placeholder="+223 .. .. .. ..">
+   <label>البريد الإلكتروني</label><input type="email" data-k="mail" id="fMail" dir="ltr" placeholder="name@example.com">
+   <label>الموقع / صفحة التواصل</label><input type="text" data-k="web" id="fWeb" dir="ltr" placeholder="www.example.org">
+   <button class="btn alt" id="btnContactClear" type="button">مسح بيانات التواصل</button>
    <h3>ملف جهتي</h3>
    <p class="note">اضبط اسم جهتك وشعارها وألوانها وبيانات التواصل في تبويبَي «المحتوى» و«التصميم»، ثم احفظها هنا مرة واحدة، وطبّقها على أي تصميم بضغطة. يمكنك حفظ عدة جهات (مسجد، مدرسة، جمعية…).</p>
    <div class="row"><input type="text" id="profName" placeholder="اسم الملف (مثل: مسجد الفاروق)"><button class="chip" id="profSave" type="button">حفظ</button></div>
@@ -2733,7 +2743,7 @@ function fromTpl(t,keep){
  var o={tpl:t.id,fmt:t.fmt||'sq',pal:t.pal,hf:t.hf,bf:t.bf,pat:t.pat,frame:t.frame,align:t.align,basmala:!!t.basmala,
   title:t.title,sub:t.sub,body:t.body,verse:t.verse||'',ts:1,box:true,accent:null,
   titleFr:t.titleFr||(FR[t.id]||[])[0]||'',subFr:t.subFr||(FR[t.id]||[])[1]||'',bodyFr:t.bodyFr||(FR[t.id]||[])[2]||'',bgDim:0.5,
-  lay:t.lay||'std',els:[],hide:{},logoSc:1,logoShape:'auto',logoRing:true,side:'front',flag:!!t.flag,gl:t.gl||'المكرّم/ة:',gbig:!!t.gbig,kind:'all',strip:!!t.strip,sigTitle:t.sigTitle||'',sigName:t.sigName||'',qr:'',memNo:'000001',guest:'',names:'',numStart:'',cols:'2',cap:!!t.cap,orgFr:t.orgFr||'',contactFr:t.contactFr||'',dFr:(t.dFr||[]).map(function(x){return {k:x[0],v:x[1]}}),
+  lay:t.lay||'std',els:[],hide:{},logoSc:1,logoShape:'auto',logoRing:true,side:'front',flag:!!t.flag,gl:t.gl||'المكرّم/ة:',gbig:!!t.gbig,kind:'all',strip:!!t.strip,sigTitle:t.sigTitle||'',sigName:t.sigName||'',qr:'',memNo:'000001',addr:'',addrFr:'',ph1:'',ph2:'',wa:'',mail:'',web:'',guest:'',names:'',numStart:'',cols:'2',cap:!!t.cap,orgFr:t.orgFr||'',contactFr:t.contactFr||'',dFr:(t.dFr||[]).map(function(x){return {k:x[0],v:x[1]}}),
   d:t.d.map(function(x){return {k:x[0],v:x[1]}})};
  while(o.d.length<6)o.d.push({k:'',v:''});
  while(o.dFr.length<4)o.dFr.push({k:'',v:''});
@@ -3323,7 +3333,7 @@ function syncUI(){
   b.style.background='linear-gradient(135deg,'+p.bg1+','+p.bg2+')';b.style.color=p.title;
   b.innerHTML='<span>'+t.n+'</span><small>'+t.s+'</small>';
   b.onclick=function(){
-   var kx={names:S.names,numStart:S.numStart,cols:S.cols,kind:S.kind,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing};
+   var kx={addr:S.addr,addrFr:S.addrFr,ph1:S.ph1,ph2:S.ph2,wa:S.wa,mail:S.mail,web:S.web,names:S.names,numStart:S.numStart,cols:S.cols,kind:S.kind,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing};
    S=fromTpl(t,{org:S.org,contact:S.contact,logo:S.logo,fmt:S.fmt,bg:S.bg,bgDim:S.bgDim});
    for(var q in kx)S[q]=kx[q];
    if(t.gbig&&!String(S.guest).trim())S.guest='........';
@@ -3740,7 +3750,7 @@ function profRender(){
   var bx=document.createElement('span');bx.className='row';
   var o=document.createElement('button');o.type='button';o.className='chip';o.textContent='تطبيق';
   o.onclick=function(){
-   var q=it.p;['org','orgFr','contact','contactFr','pal','accent','hf','bf','logo','logoSc','logoShape','logoRing'].forEach(function(k){S[k]=q[k]===undefined?S[k]:q[k]});
+   var q=it.p;['org','orgFr','contact','contactFr','addr','addrFr','ph1','ph2','wa','mail','web','pal','accent','hf','bf','logo','logoSc','logoShape','logoRing'].forEach(function(k){S[k]=q[k]===undefined?S[k]:q[k]});
    loadLogo().then(function(){syncUI();change();toast('تم تطبيق ملف الجهة')});
   };
   var x=document.createElement('button');x.type='button';x.className='chip';x.textContent='حذف';
@@ -3750,7 +3760,7 @@ function profRender(){
 }
 $('#profSave').onclick=function(){
  var nm=$('#profName').value.trim()||S.org||'جهتي';
- var q={org:S.org,orgFr:S.orgFr,contact:S.contact,contactFr:S.contactFr,pal:S.pal,accent:S.accent,hf:S.hf,bf:S.bf,logo:S.logo,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing};
+ var q={org:S.org,orgFr:S.orgFr,contact:S.contact,contactFr:S.contactFr,addr:S.addr,addrFr:S.addrFr,ph1:S.ph1,ph2:S.ph2,wa:S.wa,mail:S.mail,web:S.web,pal:S.pal,accent:S.accent,hf:S.hf,bf:S.bf,logo:S.logo,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing};
  var a=profGet();a.unshift({name:nm,p:q});
  if(profPut(a)){$('#profName').value='';profRender();toast('تم حفظ ملف الجهة')}
  else{a.shift();toast('تعذّر الحفظ (المساحة ممتلئة)')}
@@ -3853,6 +3863,23 @@ $('#btnReset').onclick=function(){
  confirmReset=0;this.textContent='إعادة ضبط التصميم';S=fromTpl(TPLS[0]);logoImg=null;bgImg=null;selId=null;syncUI();change();
 };
 var confirmReset=0;
+function ltr(x){return '\u200E'+x+'\u200E'}
+var SEP=' \u200F|\u200F ';
+function buildContact(){
+ var g=function(id){return ($('#'+id).value||'').trim()},addr=g('fAddr'),addrFr=g('fAddrFr')||addr,p1=g('fPh1'),p2=g('fPh2'),wa=g('fWa'),ml=g('fMail'),wb=g('fWeb');
+ var ph=[p1,p2].filter(Boolean),ar=[],fr=[];
+ if(addr)ar.push('العنوان: '+addr);
+ var l2=[];if(ph.length)l2.push('للتواصل: '+ph.map(ltr).join(SEP));if(wa)l2.push('واتساب: '+ltr(wa));if(l2.length)ar.push(l2.join(SEP));
+ var l3=[];if(ml)l3.push(ltr(ml));if(wb)l3.push(ltr(wb));if(l3.length)ar.push(l3.join(SEP));
+ if(addrFr)fr.push('Adresse : '+addrFr);
+ var f2=[];if(ph.length)f2.push('Tél : '+ph.join(' | '));if(wa)f2.push('WhatsApp : '+wa);if(f2.length)fr.push(f2.join(' | '));
+ var f3=[];if(ml)f3.push(ml);if(wb)f3.push(wb);if(f3.length)fr.push(f3.join(' | '));
+ if(!ar.length)return;
+ S.contact=ar.join('\n');S.contactFr=fr.join('\n');
+ var c=document.querySelector('[data-k="contact"]');if(c)c.value=S.contact;var cf=document.querySelector('[data-k="contactFr"]');if(cf)cf.value=S.contactFr;
+}
+['fAddr','fAddrFr','fPh1','fPh2','fWa','fMail','fWeb'].forEach(function(id){$('#'+id).addEventListener('input',function(){S[this.getAttribute('data-k')]=this.value;buildContact();change()})});
+$('#btnContactClear').onclick=function(){['fAddr','fAddrFr','fPh1','fPh2','fWa','fMail','fWeb'].forEach(function(id){$('#'+id).value=''});['addr','addrFr','ph1','ph2','wa','mail','web'].forEach(function(k){S[k]=''});S.contact='للتواصل: +223 .. .. .. ..';S.contactFr='';syncUI();change();toast('تم المسح')};
 $('#btnUndo').onclick=function(){histGo(-1)};$('#btnRedo').onclick=function(){histGo(1)};
 document.addEventListener('keydown',function(e){var t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT')return;if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&e.key==='z'){e.preventDefault();histGo(-1)}else if((e.ctrlKey||e.metaKey)&&(e.key==='y'||(e.shiftKey&&e.key==='Z'))){e.preventDefault();histGo(1)}});
 $('#btnBackup').onclick=function(){
