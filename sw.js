@@ -1,0 +1,11 @@
+const V='cards-designer-v7';
+const FILES=["./", "index.html", "manifest.webmanifest", "fonts/fonts.css", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png", "fonts/amiri-arabic-400-normal.woff2", "fonts/amiri-arabic-700-normal.woff2", "fonts/amiri-latin-400-normal.woff2", "fonts/amiri-latin-700-normal.woff2", "fonts/aref-ruqaa-arabic-400-normal.woff2", "fonts/aref-ruqaa-arabic-700-normal.woff2", "fonts/aref-ruqaa-latin-400-normal.woff2", "fonts/aref-ruqaa-latin-700-normal.woff2", "fonts/cairo-arabic-400-normal.woff2", "fonts/cairo-arabic-600-normal.woff2", "fonts/cairo-arabic-700-normal.woff2", "fonts/cairo-arabic-800-normal.woff2", "fonts/cairo-latin-400-normal.woff2", "fonts/cairo-latin-600-normal.woff2", "fonts/cairo-latin-700-normal.woff2", "fonts/cairo-latin-800-normal.woff2", "fonts/el-messiri-arabic-400-normal.woff2", "fonts/el-messiri-arabic-700-normal.woff2", "fonts/el-messiri-latin-400-normal.woff2", "fonts/el-messiri-latin-700-normal.woff2", "fonts/noto-naskh-arabic-arabic-400-normal.woff2", "fonts/noto-naskh-arabic-arabic-700-normal.woff2", "fonts/noto-naskh-arabic-latin-400-normal.woff2", "fonts/noto-naskh-arabic-latin-700-normal.woff2", "fonts/reem-kufi-arabic-400-normal.woff2", "fonts/reem-kufi-arabic-700-normal.woff2", "fonts/reem-kufi-latin-400-normal.woff2", "fonts/reem-kufi-latin-700-normal.woff2", "fonts/tajawal-arabic-400-normal.woff2", "fonts/tajawal-arabic-700-normal.woff2", "fonts/tajawal-arabic-800-normal.woff2", "fonts/tajawal-latin-400-normal.woff2", "fonts/tajawal-latin-700-normal.woff2", "fonts/tajawal-latin-800-normal.woff2"];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',e=>{
+ if(e.request.method!=='GET')return;
+ e.respondWith(caches.match(e.request,{ignoreSearch:true}).then(r=>r||fetch(e.request).then(res=>{
+  if(res&&res.ok&&new URL(e.request.url).origin===location.origin){const c=res.clone();caches.open(V).then(x=>x.put(e.request,c))}
+  return res;
+ }).catch(()=>caches.match('./'))));
+});
