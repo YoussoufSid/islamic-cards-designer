@@ -2646,7 +2646,8 @@ var FORMATS=[
  {id:'p45',n:'منشور 4:5',w:1080,h:1350},
  {id:'story',n:'حالة / ستوري',w:1080,h:1920},
  {id:'a4',n:'ملصق A4',w:1240,h:1754},
- {id:'banner',n:'لافتة عريضة',w:2400,h:800}
+ {id:'banner',n:'لافتة عريضة',w:2400,h:800},
+ {id:'wide',n:'شاشة / ملصق 16:9',w:1920,h:1080}
 ];
 var PAL={
  emerald:{n:'زمردي',bg1:'#0e4d3a',bg2:'#06281f',title:'#fff8e1',ink:'#e8f1ec',accent:'#d4af37'},
@@ -2657,6 +2658,7 @@ var PAL={
  mint:{n:'نعناعي',light:1,bg1:'#f4f9df',bg2:'#d9efe2',title:'#15356b',ink:'#15356b',accent:'#0f6b4a'},
  azure:{n:'أزرق',bg1:'#29b0e6',bg2:'#0a74b8',title:'#ffffff',ink:'#eaf7ff',accent:'#ffe27a'},
  royal:{n:'ملكي',light:1,bg1:'#fffaf0',bg2:'#f3e6c4',title:'#2a1d08',ink:'#2d2210',accent:'#b98a1c'},
+ navygold:{n:'أزرق وذهبي',light:1,bg1:'#fffdf7',bg2:'#f3e7c9',title:'#14305f',ink:'#1d2b45',accent:'#c9a13b'},
  seid:{n:'سيد القراء',light:1,bg1:'#fff9f3',bg2:'#f1e3df',title:'#1c3550',ink:'#2b3a4a',accent:'#a24d68'},
  cream:{n:'عاجي',light:1,bg1:'#fbf5e6',bg2:'#efe3c4',title:'#0e4d3a',ink:'#2b3a33',accent:'#a8801c'},
  white:{n:'أبيض أخضر',light:1,bg1:'#ffffff',bg2:'#e8f3ee',title:'#0b5a3f',ink:'#27403a',accent:'#c29b2a'},
@@ -2815,6 +2817,13 @@ var TPLS=[
  {id:'cert',n:'شهادة تقدير / تفوق',s:'A4 أفقي — تُنشأ لكل اسم دفعة واحدة',k:['tahfeez','school','assoc','mosque','charity'],fmt:'a4l',pal:'cream',hf:'Aref Ruqaa',bf:'Amiri',pat:'stars',frame:'double',align:'center',basmala:true,gl:'الطالب/ة:',gbig:true,
   title:'شهادة تقدير',sub:'تمنحها إدارة ........',body:'تقديرًا لتفوقه/ها في ........ ونيله/ها المرتبة ........، سائلين الله له/ها دوام التوفيق والسداد.',
   d:[['التاريخ','........'],['','']],verse:'',contact:'المدير: ........'},
+ {id:'seidwide',ex:true,n:'إعلان تخريج عريض — سيد القراء',s:'16:9 عربي | فرنسي بالشعار الأصلي',fmt:'wide',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'Cairo',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
+  org:'مركز سيد القراء',title:'حفل تخريج',sub:'(دفعة الشيخ عمر عبد القادر جلو)',body:'الدفعة الثالثة من طلاب مركز سيد القراء',
+  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الساعة','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','في قصر معتمرات بماكو (C.I.C.B)'],['','']],verse:'',
+  contact:'حضوركم شرف لنا',
+  titleFr:'Cérémonie de remise des diplômes',orgFr:'Centre Seid Al Qura’i',subFr:'« Promotion Cheikh Oumar Abdoul Kader DIALLO »',bodyFr:'De la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',
+  dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['','']],
+  contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
  {id:'seid',ex:true,n:'دعوة تخريج — سيد القراء',s:'حفل تخريج الدفعة الثالثة',fmt:'p45',own:true,logoPreset:true,pal:'seid',hf:'Aref Ruqaa',bf:'Amiri',pat:'stars',frame:'double',align:'center',basmala:true,
   org:'مركز سيد القراء',title:'حفل تخريج الدفعة الثالثة',sub:'دفعة الشيخ عمر عبد القادر جلو',body:'',
   d:[['اليوم والتاريخ','الأحد 6 ديسمبر 2026م'],['الوقت','من تمام التاسعة صباحًا (9:00)'],['المكان','قصر معتمرات بماكو'],['','']],verse:'',
@@ -2844,7 +2853,7 @@ function fromTpl(t,keep){
  while(o.dFr.length<4)o.dFr.push({k:'',v:''});
  o.org=keep?keep.org:'اسم المسجد / المركز';
  o.contact=keep?keep.contact:'للتواصل: +223 .. .. .. ..';
- if(t.lay==='bi'||t.lay==='mem'||t.own){o.org=t.org;o.contact=t.contact}
+ if(t.lay==='bi'||t.lay==='gw'||t.lay==='mem'||t.own){o.org=t.org;o.contact=t.contact}
  o.logo=keep?keep.logo:null;o.bg=keep?keep.bg:null;if(t.logoPreset)o.logo=PRESET_LOGOS[0].d;if(keep&&keep.bgDim!=null)o.bgDim=keep.bgDim;
  if(keep&&!t.fmt)o.fmt=keep.fmt;
  return o;
@@ -3232,6 +3241,98 @@ function drawMem(ctx,W,H,u,pal){
  });
  ctx.restore();
 }
+
+function pinIcon(ctx,cx,cy,s,col){
+ ctx.save();ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(cx,cy+s*0.48);ctx.bezierCurveTo(cx-s*0.5,cy-s*0.05,cx-s*0.36,cy-s*0.48,cx,cy-s*0.48);ctx.bezierCurveTo(cx+s*0.36,cy-s*0.48,cx+s*0.5,cy-s*0.05,cx,cy+s*0.48);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#fffdf7';ctx.beginPath();ctx.arc(cx,cy-s*0.12,s*0.14,0,6.3);ctx.fill();ctx.restore();
+}
+function gwPill(ctx,x,y,w,h,navy,gold,gloss){
+ var r=h*0.5;ctx.save();
+ var g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,gloss||'#1f4a8f');g.addColorStop(1,navy);
+ rr(ctx,x,y,w,h,r*0.55);ctx.fillStyle=g;ctx.shadowColor='rgba(0,0,0,0.28)';ctx.shadowBlur=h*0.18;ctx.shadowOffsetY=h*0.06;ctx.fill();ctx.shadowColor='transparent';
+ ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,h*0.04);ctx.stroke();
+ ctx.globalAlpha=0.7;ctx.lineWidth=Math.max(1,h*0.014);rr(ctx,x+h*0.07,y+h*0.07,w-h*0.14,h-h*0.14,r*0.4);ctx.stroke();ctx.restore();
+}
+function gwOrn(ctx,cx,cy,dir,len,gold,sc){
+ ctx.save();ctx.strokeStyle=gold;ctx.fillStyle=gold;ctx.lineWidth=Math.max(1.5,sc*0.1);
+ ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+dir*len,cy);ctx.stroke();
+ ctx.translate(cx,cy);[0,1].forEach(function(i){ctx.save();ctx.translate(dir*sc*(0.6+i*1.7),0);ctx.rotate(Math.PI/4);ctx.fillRect(-sc*0.28,-sc*0.28,sc*0.56,sc*0.56);ctx.restore()});
+ ctx.beginPath();ctx.arc(dir*sc*3.7,0,sc*0.3,0,6.3);ctx.fill();ctx.restore();
+}
+function drawGW(ctx,W,H,u,pal){
+ var navy=pal.title,gold=pal.accent,red=S.bcol||'#8b1a1a',m=W*0.035;
+ // corner swooshes
+ [[0,0,1,1],[W,H,-1,-1]].forEach(function(c){
+  ctx.save();ctx.translate(c[0],c[1]);ctx.scale(c[2],c[3]);
+  var g=ctx.createLinearGradient(0,0,W*0.2,H*0.25);g.addColorStop(0,navy);g.addColorStop(1,'#2a5db0');
+  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W*0.17,0);ctx.bezierCurveTo(W*0.09,H*0.03,W*0.03,H*0.1,0,H*0.2);ctx.closePath();ctx.fillStyle=g;ctx.fill();
+  ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,u*0.004);ctx.beginPath();ctx.moveTo(W*0.175,0);ctx.bezierCurveTo(W*0.1,H*0.04,W*0.04,H*0.11,0,H*0.215);ctx.stroke();
+  ctx.lineWidth=Math.max(1,u*0.0015);ctx.beginPath();ctx.moveTo(W*0.19,0);ctx.bezierCurveTo(W*0.11,H*0.05,W*0.05,H*0.12,0,H*0.235);ctx.stroke();
+  ctx.restore();
+ });
+ // inner frame
+ ctx.save();ctx.strokeStyle=gold;ctx.globalAlpha=0.55;ctx.lineWidth=Math.max(1.5,u*0.002);rr(ctx,m*1.1,m*0.9,W-m*2.2,H-m*1.8,u*0.03);ctx.stroke();ctx.restore();
+ var hw=(W-2*m-W*0.045)/2,gx=W*0.045/2;
+ var xa=W/2+gx,xf=W/2-gx-hw; // arabic right half, french left half
+ // logo
+ var lg=H*0.21,ly=H*0.115;
+ if(logoImg){drawLogo(ctx,logoImg,W/2,ly+lg*0.02,lg,pal)}
+ gwOrn(ctx,W/2+lg*0.62,ly,1,W*0.17,gold,H*0.014);gwOrn(ctx,W/2-lg*0.62,ly,-1,W*0.17,gold,H*0.014);
+ // center divider
+ var dy0=H*0.33,dy1=H*0.77;ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.0022);ctx.beginPath();ctx.moveTo(W/2,dy0);ctx.lineTo(W/2,dy1);ctx.stroke();
+ ctx.translate(W/2,(dy0+dy1)/2);ctx.rotate(Math.PI/4);ctx.fillStyle=gold;ctx.fillRect(-H*0.012,-H*0.012,H*0.024,H*0.024);ctx.restore();
+ function half(x,dir,fam,o){
+  var rtl=dir==='rtl',cx=x+hw/2;
+  ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=dir;
+  // title banner
+  var by=H*0.215,bh=H*0.135;
+  gwPill(ctx,x,by,hw,bh,navy,gold);
+  ctx.fillStyle='#ffffff';fitFont(ctx,fam,'700',bh*(rtl?0.62:0.36),o.title||'',hw*0.86);
+  if(!rtl){var tl=wrap(ctx,o.title||'',hw*0.86);if(tl.length>1){var fz=bh*0.34;fnt(ctx,fam,'700',fz);tl=wrap(ctx,o.title,hw*0.86);tl.slice(0,2).forEach(function(l,i){ctx.fillText(l,cx,by+bh/2+fz*1.1*(i-(Math.min(2,tl.length)-1)/2))})}else ctx.fillText(o.title||'',cx,by+bh/2)}
+  else ctx.fillText(o.title||'',cx,by+bh/2);
+  // body (big navy)
+  var y=by+bh+H*0.025,txt=o.body||o.org||'';
+  var bs=H*0.052;fnt(ctx,fam,'700',bs);var bl=wrap(ctx,txt,hw*0.98);if(bl.length>1){var b1=bs*0.82;fnt(ctx,fam,'700',b1);var t1=wrap(ctx,txt,hw*0.98);if(t1.length===1){bs=b1;bl=t1}else{bs*=0.86;fnt(ctx,fam,'700',bs);bl=wrap(ctx,txt,hw*0.98);if(bl.length>2)bl=wrap(ctx,txt,hw*0.7)}}
+  ctx.fillStyle=navy;bl.slice(0,3).forEach(function(l,i){ctx.fillText(l,cx,y+bs*1.2*(i+0.5))});y+=bl.slice(0,3).length*bs*1.2+H*0.02;
+  // sub pill
+  if(String(o.sub||'').trim()){
+   var sh=H*0.095,sg=ctx.createLinearGradient(0,y,0,y+sh);sg.addColorStop(0,'#fffdf4');sg.addColorStop(1,'#f6e4b8');
+   ctx.save();rr(ctx,x+hw*0.03,y,hw*0.94,sh,sh*0.5);ctx.fillStyle=sg;ctx.shadowColor='rgba(0,0,0,0.18)';ctx.shadowBlur=sh*0.18;ctx.shadowOffsetY=sh*0.05;ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,sh*0.035);ctx.stroke();ctx.restore();
+   var ss=sh*(rtl?0.5:0.36);fnt(ctx,fam,'700',ss);var sl=wrap(ctx,o.sub,hw*0.84);if(sl.length>1){fnt(ctx,fam,'700',ss);sl=wrap(ctx,o.sub,hw*0.6)}
+   ctx.fillStyle=red;sl.slice(0,2).forEach(function(l,i){ctx.fillText(l,cx,y+sh/2+ss*1.15*(i-(Math.min(2,sl.length)-1)/2))});
+   y+=sh+H*0.025;
+  }
+  // details
+  var rows=o.rows.filter(function(r){return String(r.v).trim()}),icons=[calIcon,clockIcon,pinIcon,mosqueIcon],rh=Math.min(H*0.1,(H*0.845-y)/Math.max(1,rows.length));
+  rows.forEach(function(r,i){
+   var ry=y+rh*i+rh/2,isz=rh*0.72,ix=rtl?x+hw-isz/2-hw*0.01:x+isz/2+hw*0.01;
+   icons[i%4](ctx,ix,ry,isz,navy);
+   ctx.textAlign=rtl?'right':'left';
+   var tx=rtl?ix-isz*0.75:ix+isz*0.75,room=hw-isz*1.0,vs=rh*0.5,kk=String(r.k||'').trim();
+   if(rtl&&kk){ // key pill on the right, value left of it
+    fnt(ctx,fam,'700',rh*0.4);var kw=ctx.measureText(kk).width+rh*0.55;
+    gwPill(ctx,tx-kw,ry-rh*0.34,kw,rh*0.68,navy,gold);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(kk,tx-kw/2,ry);
+    ctx.textAlign='right';tx=tx-kw-rh*0.2;room-=kw+rh*0.2;
+    fnt(ctx,fam,'700',vs);var vl=wrap(ctx,r.v,room);if(vl.length>1){vs*=0.8;fnt(ctx,fam,'700',vs);vl=wrap(ctx,r.v,room)}
+    ctx.fillStyle=red;vl.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl.length)-1)/2))});
+   }else{
+    var line=(kk?kk+' : ':'')+r.v;vs=rh*0.42;fnt(ctx,fam,'700',vs);var vl2=wrap(ctx,line,room);if(vl2.length>1){vs*=0.82;fnt(ctx,fam,'700',vs);vl2=wrap(ctx,line,room)}
+    ctx.fillStyle=red;vl2.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl2.length)-1)/2))});
+    if(kk&&vl2.length===1){fnt(ctx,fam,'700',vs);var kw2=ctx.measureText(kk+' : ').width;ctx.fillStyle=navy;ctx.fillText(kk+' :',tx,ry-0);ctx.fillStyle=red;ctx.fillText(r.v,tx+kw2,ry);}
+   }
+  });
+  ctx.restore();
+ }
+ half(xa,'rtl',S.bf,{title:S.title,body:S.body,org:S.org,sub:S.sub,rows:(S.d||[])});
+ half(xf,'ltr','Cairo',{title:S.titleFr,body:S.bodyFr,org:S.orgFr,sub:S.subFr,rows:(S.dFr||[])});
+ // bottom banner
+ var bh2=H*0.105,by2=H*0.865,bx2=m*1.4,bw2=W-2*bx2;
+ gwPill(ctx,bx2,by2,bw2,bh2,navy,gold);
+ ctx.save();ctx.textBaseline='middle';ctx.fillStyle='#fff';
+ ctx.textAlign='center';ctx.direction='rtl';fitFont(ctx,S.bf,'700',bh2*0.42,S.contact||'',bw2*0.4);ctx.fillText(S.contact||'',bx2+bw2*0.74,by2+bh2/2);
+ ctx.direction='ltr';fitFont(ctx,'Cairo','600',bh2*0.3,S.contactFr||'',bw2*0.4);var cl=wrap(ctx,S.contactFr||'',bw2*0.4),cf=bh2*0.3;fnt(ctx,'Cairo','600',cf);cl.slice(0,2).forEach(function(l,i){ctx.fillText(l,bx2+bw2*0.26,by2+bh2/2+cf*1.1*(i-(Math.min(2,cl.length)-1)/2))});
+ ctx.translate(bx2+bw2/2,by2+bh2/2);ctx.rotate(Math.PI/4);ctx.fillStyle=gold;ctx.fillRect(-bh2*0.1,-bh2*0.1,bh2*0.2,bh2*0.2);ctx.restore();
+}
 function drawBi(ctx,W,H,u,pal,fr){
  var navy=pal.title,green=pal.accent,cols=W>=H*1.3,strip=!!S.strip&&cols;
  var m=S.frame==='none'?u*0.035:fr.pad*0.8,gap=(cols?W:H)*0.024,ar,fq;
@@ -3287,6 +3388,7 @@ function draw0(){
  rg.addColorStop(0,pal.light?'rgba(255,255,255,.55)':'rgba(255,255,255,.09)');rg.addColorStop(1,'rgba(255,255,255,0)');
  ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
  var fr=drawFrame(ctx,W,H,u,pal,S.frame);
+ if(S.lay==='gw'){drawGW(ctx,W,H,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
  if(S.lay==='bi'){drawBi(ctx,W,H,u,pal,fr);drawNum(ctx,W,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
 
  var wide=W/H>2.2,center=S.align==='center';
@@ -3487,7 +3589,7 @@ function syncUI(){
   if(el.type==='checkbox')el.checked=!!S[k];else el.value=S[k]==null?'':S[k];
  });
  buildDRows();buildDFrRows();buildHide();renderElUI();
- $('#biBox').style.display=(S.lay==='bi'||S.lay==='mem')?'block':'none';$('#memBox').style.display=S.lay==='mem'?'block':'none';
+ $('#biBox').style.display=(S.lay==='bi'||S.lay==='gw'||S.lay==='mem')?'block':'none';$('#memBox').style.display=S.lay==='mem'?'block':'none';
  $('#accent').value=S.accent||PAL[S.pal].accent;$('#tcol').value=S.tcol||PAL[S.pal].title;$('#bcol').value=S.bcol||PAL[S.pal].ink;$('#tshc').value=S.tshc||'#000000';
  syncChips();
 }
@@ -3514,7 +3616,7 @@ var TABIC={
  chips($('#kindChips'),[['all','الكل'],['mosque','مسجد'],['school','مدرسة / معهد'],['tahfeez','مركز تحفيظ'],['assoc','جمعية / رابطة'],['charity','مؤسسة خيرية']],'kind');
  chips($('#sideChips'),[['front','الوجه'],['back','الظهر']],'side');
  chips($('#colChips'),[['1','١ في الصف'],['2','٢ في الصف'],['3','٣ في الصف']],'cols');
- chips($('#layChips'),[['std','عادي'],['bi','ثنائي اللغة (عربي | فرنسي)'],['mem','بطاقة عضوية (وجه/ظهر)']],'lay');
+ chips($('#layChips'),[['std','عادي'],['bi','ثنائي اللغة (عربي | فرنسي)'],['gw','إعلان عريض ثنائي (16:9)'],['mem','بطاقة عضوية (وجه/ظهر)']],'lay');
  chips($('#fmtChips'),FORMATS.map(function(f){return [f.id,f.n]}),'fmt');
  chips($('#patChips'),PATS,'pat');chips($('#phChips'),[['circle','دائري'],['round','مستدير'],['arch','قوس محراب'],['oval','بيضاوي'],['hex','سداسي'],['rect','مربع']],'phShape');
  $('#phPick').onclick=function(){S.phOn=true;$('#phFile').click()};$('#phDel').onclick=function(){S.photo=null;change()};$('#phRst').onclick=function(){S.phx=0;S.phy=0;change()};
