@@ -231,7 +231,15 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
  window.addEventListener('appinstalled',function(){if(b)b.style.display='none'});
  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent),st=window.matchMedia&&matchMedia('(display-mode: standalone)').matches||navigator.standalone;
  if(ios&&!st&&b){b.style.display='inline-block';b.onclick=function(){alert('للتثبيت على الآيفون: اضغط زر المشاركة في Safari ثم «إضافة إلى الشاشة الرئيسية».')}}
- if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(function(){});
+ if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)){
+  var had=!!navigator.serviceWorker.controller,rl=false;
+  navigator.serviceWorker.addEventListener('controllerchange',function(){if(!had){had=true;return}if(rl)return;rl=true;setTimeout(function(){location.reload()},800)});
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){
+   var chk=function(){try{r.update()}catch(e){}};
+   document.addEventListener('visibilitychange',function(){if(!document.hidden)chk()});
+   window.addEventListener('online',chk);setInterval(chk,30*60*1000);
+  }).catch(function(){});
+ }
 })();
 </script>
 <script>
