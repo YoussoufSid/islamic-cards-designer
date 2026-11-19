@@ -2826,10 +2826,10 @@ var TPLS=[
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
  {id:'seidwide',ex:true,n:'إعلان تخريج عريض — سيد القراء',s:'16:9 عربي | فرنسي بالشعار الأصلي',fmt:'wide',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'Cairo',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
   org:'مركز سيد القراء',title:'حفل تخريج',sub:'(دفعة الشيخ عمر عبد القادر جلو)',body:'الدفعة الثالثة من طلاب مركز سيد القراء',
-  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الساعة','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','في قصر معتمرات بماكو (C.I.C.B)'],['','']],verse:'',
+  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الساعة','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','في قصر معتمرات بماكو (C.I.C.B)'],['الهاتف','\u200E77 87 33 85\u200E  |  \u200E76 92 57 57\u200E']],verse:'',
   contact:'حضوركم شرف لنا',
   titleFr:'Cérémonie de remise des diplômes',orgFr:'Centre Seid Al Qura’i',subFr:'« Promotion Cheikh Oumar Abdoul Kader DIALLO »',bodyFr:'De la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',
-  dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['','']],
+  dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['Tél','77 87 33 85  |  76 92 57 57']],
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
  {id:'seid',ex:true,n:'دعوة تخريج — سيد القراء',s:'حفل تخريج الدفعة الثالثة',fmt:'p45',own:true,logoPreset:true,pal:'seid',hf:'Aref Ruqaa',bf:'Amiri',pat:'stars',frame:'double',align:'center',basmala:true,
   org:'مركز سيد القراء',title:'حفل تخريج الدفعة الثالثة',sub:'دفعة الشيخ عمر عبد القادر جلو',body:'',
@@ -3249,6 +3249,9 @@ function drawMem(ctx,W,H,u,pal){
  ctx.restore();
 }
 
+function phoneIcon(ctx,cx,cy,s,col){
+ ctx.save();ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=s*0.08;rr(ctx,cx-s*0.24,cy-s*0.42,s*0.48,s*0.84,s*0.09);ctx.stroke();ctx.fillRect(cx-s*0.24,cy-s*0.3,s*0.48,s*0.05);ctx.fillRect(cx-s*0.24,cy+s*0.24,s*0.48,s*0.05);ctx.beginPath();ctx.arc(cx,cy+s*0.355,s*0.035,0,6.3);ctx.fill();ctx.restore();
+}
 function pinIcon(ctx,cx,cy,s,col){
  ctx.save();ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(cx,cy+s*0.48);ctx.bezierCurveTo(cx-s*0.5,cy-s*0.05,cx-s*0.36,cy-s*0.48,cx,cy-s*0.48);ctx.bezierCurveTo(cx+s*0.36,cy-s*0.48,cx+s*0.5,cy-s*0.05,cx,cy+s*0.48);ctx.closePath();ctx.fill();
  ctx.fillStyle='#fffdf7';ctx.beginPath();ctx.arc(cx,cy-s*0.12,s*0.14,0,6.3);ctx.fill();ctx.restore();
@@ -3310,7 +3313,7 @@ function drawGW(ctx,W,H,u,pal){
    y+=sh+H*0.025;
   }
   // details
-  var rows=o.rows.filter(function(r){return String(r.v).trim()}),icons=[calIcon,clockIcon,pinIcon,mosqueIcon],rh=Math.min(H*0.1,(H*0.845-y)/Math.max(1,rows.length));
+  var rows=o.rows.filter(function(r){return String(r.v).trim()}),icons=[calIcon,clockIcon,pinIcon,phoneIcon],rh=Math.min(H*0.1,(H*0.845-y)/Math.max(1,rows.length));
   rows.forEach(function(r,i){
    var ry=y+rh*i+rh/2,isz=rh*0.72,ix=rtl?x+hw-isz/2-hw*0.01:x+isz/2+hw*0.01;
    icons[i%4](ctx,ix,ry,isz,navy);
@@ -3324,8 +3327,8 @@ function drawGW(ctx,W,H,u,pal){
     ctx.fillStyle=red;vl.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl.length)-1)/2))});
    }else{
     var line=(kk?kk+' : ':'')+r.v;vs=rh*0.42;fnt(ctx,fam,'700',vs);var vl2=wrap(ctx,line,room);if(vl2.length>1){vs*=0.82;fnt(ctx,fam,'700',vs);vl2=wrap(ctx,line,room)}
-    ctx.fillStyle=red;vl2.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl2.length)-1)/2))});
-    if(kk&&vl2.length===1){fnt(ctx,fam,'700',vs);var kw2=ctx.measureText(kk+' : ').width;ctx.fillStyle=navy;ctx.fillText(kk+' :',tx,ry-0);ctx.fillStyle=red;ctx.fillText(r.v,tx+kw2,ry);}
+    if(kk&&vl2.length===1){fnt(ctx,fam,'700',vs);var kw2=ctx.measureText(kk+' : ').width;ctx.fillStyle=navy;ctx.fillText(kk+' :',tx,ry);ctx.fillStyle=red;ctx.fillText(String(r.v),tx+kw2,ry);}
+    else{ctx.fillStyle=red;vl2.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl2.length)-1)/2))})}
    }
   });
   ctx.restore();
