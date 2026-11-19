@@ -245,7 +245,8 @@ input[type=tel],input[type=email],input[type=date]{width:100%;padding:11px 12px;
    <p class="note">مكان جاهز لصورة الشيخ أو المناسبة، يتوسّط البطاقة ولا يتداخل مع النصوص (التخطيط العادي).</p>
    <label class="chk"><input type="checkbox" data-k="phOn"> إظهار مكان الصورة</label>
    <input type="file" id="phFile" accept="image/*" style="display:none">
-   <div class="chips"><button class="chip" id="phPick" type="button">📷 اختيار الصورة</button><button class="chip" id="phDel" type="button">حذف الصورة</button></div>
+   <div class="chips"><button class="chip" id="phPick" type="button">📷 اختيار الصورة</button><button class="chip" id="phDel" type="button">حذف الصورة</button><button class="chip" id="phRst" type="button">إعادة الموضع</button></div>
+   <p class="note">اسحب الصورة في البطاقة لتحريكها، أو اضغط عليها لاختيار صورة.</p>
    <div class="chips" id="phChips" style="margin-top:6px"></div>
    <label>حجم الصورة</label><input type="range" min="0.1" max="0.45" step="0.01" data-k="phSz">
    <h3>إضافة عنصر</h3>
@@ -3318,8 +3319,8 @@ function draw0(){
   if(S.phOn&&!wide){
    var pw=u*S.phSz*s,ph2=pw*(S.phShape==='arch'?1.25:S.phShape==='oval'?1.2:1),psh=S.phShape||'circle';
    B.push({h:ph2,gap:u*0.016*s,draw:function(y){
-    var w=pw,h=ph2,px=center?cx:right-w/2,py=y+h/2;
-    PHR={x:px-w/2,y:y,w:w,h:h};
+    var w=pw,h=ph2,px=(center?cx:right-w/2)+(S.phx||0)*W,py=y+h/2+(S.phy||0)*H;
+    PHR={x:px-w/2,y:py-h/2,w:w,h:h};
     ctx.save();ctx.translate(px,py);
     var path=function(){ctx.beginPath();
      if(psh==='circle'){ctx.arc(0,0,Math.min(w,h)/2,0,6.3)}
@@ -3516,7 +3517,7 @@ var TABIC={
  chips($('#layChips'),[['std','عادي'],['bi','ثنائي اللغة (عربي | فرنسي)'],['mem','بطاقة عضوية (وجه/ظهر)']],'lay');
  chips($('#fmtChips'),FORMATS.map(function(f){return [f.id,f.n]}),'fmt');
  chips($('#patChips'),PATS,'pat');chips($('#phChips'),[['circle','دائري'],['round','مستدير'],['arch','قوس محراب'],['oval','بيضاوي'],['hex','سداسي'],['rect','مربع']],'phShape');
- $('#phPick').onclick=function(){S.phOn=true;$('#phFile').click()};$('#phDel').onclick=function(){S.photo=null;change()};
+ $('#phPick').onclick=function(){S.phOn=true;$('#phFile').click()};$('#phDel').onclick=function(){S.photo=null;change()};$('#phRst').onclick=function(){S.phx=0;S.phy=0;change()};
  $('#phFile').onchange=function(){var f=this.files&&this.files[0];if(!f)return;readImg(f,900,function(d){S.photo=d;S.phOn=true;syncUI();change()});this.value=''};
 chips($('#tshChips'),TSHM,'tsh');
  $('#tcol').oninput=function(){S.tcol=this.value;change()};$('#tcolR').onclick=function(){S.tcol=null;syncUI();change()};
@@ -3539,7 +3540,7 @@ chips($('#logoModeChips'),[['both','شعار في كل نصف'],['top','شعار
   b.style.background='linear-gradient(135deg,'+p.bg1+','+p.bg2+')';b.style.color=p.title;
   b.innerHTML='<img alt="" decoding="async"><span>'+t.n+'</span><small>'+t.s+'</small>';
   b.onclick=function(){
-   var kx={addr:S.addr,addrFr:S.addrFr,ph1:S.ph1,ph2:S.ph2,wa:S.wa,mail:S.mail,web:S.web,names:S.names,numStart:S.numStart,cols:S.cols,kind:S.kind,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing,logoMode:S.logoMode,lgx:S.lgx,lgy:S.lgy,photo:S.photo,phShape:S.phShape,phSz:S.phSz};
+   var kx={addr:S.addr,addrFr:S.addrFr,ph1:S.ph1,ph2:S.ph2,wa:S.wa,mail:S.mail,web:S.web,names:S.names,numStart:S.numStart,cols:S.cols,kind:S.kind,logoSc:S.logoSc,logoShape:S.logoShape,logoRing:S.logoRing,logoMode:S.logoMode,lgx:S.lgx,lgy:S.lgy,photo:S.photo,phShape:S.phShape,phSz:S.phSz,phx:S.phx,phy:S.phy};
    S=fromTpl(t,{org:S.org,contact:S.contact,logo:S.logo,fmt:S.fmt,bg:S.bg,bgDim:S.bgDim});
    for(var q in kx)S[q]=kx[q];
    if(t.gbig&&!String(S.guest).trim())S.guest='........';
@@ -3903,12 +3904,13 @@ cv.addEventListener('pointerdown',function(ev){
    draw();ev.preventDefault();return;
   }
  }
- if(PHR&&!S.photo&&!noSel&&p.x>=PHR.x&&p.x<=PHR.x+PHR.w&&p.y>=PHR.y&&p.y<=PHR.y+PHR.h){$('#phFile').click();ev.preventDefault();return}
+ if(PHR&&!noSel&&p.x>=PHR.x&&p.x<=PHR.x+PHR.w&&p.y>=PHR.y&&p.y<=PHR.y+PHR.h){drag={m:'ph',x0:p.x,y0:p.y,ox:S.phx||0,oy:S.phy||0,moved:false};try{cv.setPointerCapture(ev.pointerId)}catch(x){}ev.preventDefault();return}
  if(selId){selId=null;renderElUI();draw()}
 });
 cv.addEventListener('pointermove',function(ev){
  if(!drag)return;
  var W=cv.width,H=cv.height,p=ptr(ev),e=drag.e;
+ if(drag.m==='ph'){if(Math.hypot(p.x-drag.x0,p.y-drag.y0)>W*0.01)drag.moved=true;if(drag.moved){S.phx=Math.max(-0.6,Math.min(0.6,drag.ox+(p.x-drag.x0)/W));S.phy=Math.max(-0.6,Math.min(0.6,drag.oy+(p.y-drag.y0)/H));draw()}return}
  if(drag.m==='move'){e.x=Math.min(1.1,Math.max(-0.1,(p.x+drag.dx)/W));e.y=Math.min(1.1,Math.max(-0.1,(p.y+drag.dy)/H))}
  else{
   var l=toLocal(e,p),k=Math.max(0.15,Math.min(6,Math.hypot(l.x,l.y)/drag.d0));
@@ -3918,7 +3920,7 @@ cv.addEventListener('pointermove',function(ev){
  }
  draw();
 });
-function endDrag(){if(drag){drag=null;save();renderProps()}}
+function endDrag(){if(drag){var d=drag;drag=null;save();if(d.m==='ph'){if(!d.moved&&!S.photo)$('#phFile').click()}else renderProps()}}
 cv.addEventListener('pointerup',endDrag);cv.addEventListener('pointercancel',endDrag);
 
 function newEl(o){
