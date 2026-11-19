@@ -114,7 +114,7 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
    <h3>التفاصيل (التاريخ، الوقت، المكان…)</h3>
    <div id="dRows"></div>
    <button class="chip" id="dAdd" type="button">+ إضافة سطر</button>
-   <div class="row" style="margin-top:6px"><input type="date" id="dpick" style="flex:1;min-width:0;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--card);font:500 14px Cairo"><button class="chip" id="dH" type="button">هجري</button><button class="chip" id="dG" type="button">ميلادي</button></div>
+   <div class="row" style="margin-top:6px"><input type="date" id="dpick" style="flex:1;min-width:0;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--card);font:500 14px Cairo"><button class="chip" id="dH" type="button">هجري</button><button class="chip" id="dG" type="button">ميلادي</button><button class="chip" id="dB" type="button">الاثنان معًا</button></div>
    <p class="note">اختر تاريخًا (أو اتركه لتاريخ اليوم) ثم اضغط «هجري» أو «ميلادي» لإدراجه في سطر التاريخ.</p>
    <label class="chk"><input type="checkbox" data-k="box"> إظهار التفاصيل داخل إطار</label>
    <h3>آية أو حديث</h3>
@@ -187,6 +187,11 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
    <input type="file" id="imgFile" accept="image/*" style="display:none">
    <div class="chips"><button class="chip" id="addText" type="button">+ نص</button><button class="chip" id="addImg" type="button">+ صورة / شعار</button><button class="chip" id="addQr" type="button">+ QR</button></div>
    <div class="chips" id="shapeChips" style="margin-top:8px"></div>
+   <h3>إطارات صور جاهزة</h3>
+   <p class="note">اضغط الشكل ثم اختر الصورة، فتُقصّ داخل إطار مزدوج وظل جاهز.</p>
+   <div class="chips" id="frameBtns"></div>
+   <h3>زخارف جاهزة</h3>
+   <div class="chips" id="ornBtns"></div>
    <h3>العناصر المضافة</h3>
    <div id="elList"></div>
    <div id="elProps"></div>
@@ -213,7 +218,8 @@ input[type=color]{width:44px;height:38px;border:1px solid var(--line);border-rad
   <div class="pane" data-pane="export">
    <h3>التصدير</h3>
    <div class="chips" id="xfChips"></div>
-   <button class="btn" id="btnPng">حفظ الصورة</button>
+   <button class="btn" id="btnPng">حفظ الملف</button>
+   <button class="btn" id="btnShare" style="background:#1fa855">مشاركة (واتساب وغيره)</button>
    <button class="btn alt" id="btnView">عرض الصورة للحفظ بالضغط المطوّل</button>
    <button class="btn alt" id="btnCopy">نسخ الصورة</button>
    <p class="note" id="expNote"></p>
@@ -3441,6 +3447,16 @@ $('#dH').onclick=function(){
  try{putDate(new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-arab',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(pickedDate()))}
  catch(e){toast('تعذّر التحويل في هذا المتصفح')}
 };
+$('#dB').onclick=function(){
+ try{var dt=pickedDate();
+  var g=new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(dt)+'م';
+  var h=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'long',year:'numeric'}).format(dt).replace(/\s*هـ?$/,'')+'هـ';
+  putDate(g+' الموافق '+h);
+  var fr=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(dt);fr=fr.charAt(0).toUpperCase()+fr.slice(1);
+  var j=-1;(S.dFr||[]).forEach(function(r,i){if(j<0&&/date|jour/i.test(r.k))j=i});
+  if(j>=0){S.dFr[j].v=fr;syncUI();change()}
+ }catch(e){toast('تعذّر التحويل في هذا المتصفح')}
+};
 $('#dG').onclick=function(){
  try{putDate(new Intl.DateTimeFormat('ar-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(pickedDate()))}
  catch(e){toast('تعذّر التحويل في هذا المتصفح')}
@@ -3600,7 +3616,14 @@ function drawEl(ctx,e,W,H,u,pal){
    if(e.ring2){ctx.save();ctx.scale(0.92,0.92);ctx.lineWidth=Math.max(1,cw2*0.009);sp();ctx.stroke();ctx.restore()}}
  }else if(e.type==='shape'){
   ctx.fillStyle=e.c;ctx.strokeStyle=e.c;ctx.lineWidth=Math.max(1,e.lw*u);
-  if(e.kind==='line')ctx.fillRect(-w/2,-Math.max(1,e.lw*u)/2,w,Math.max(1,e.lw*u));
+  var lwp=Math.max(1,e.lw*u);
+  if(e.kind==='line')ctx.fillRect(-w/2,-lwp/2,w,lwp);
+  else if(e.kind==='star'){ctx.beginPath();for(var i=0;i<16;i++){var r=i%2?0.42:1,a=Math.PI/8*i-Math.PI/2;ctx.lineTo(Math.cos(a)*w/2*r,Math.sin(a)*h/2*r)}ctx.closePath();if(e.fill===false)ctx.stroke();else ctx.fill()}
+  else if(e.kind==='crescent'){ctx.beginPath();ctx.ellipse(0,0,w/2,h/2,0,0,6.3);ctx.ellipse(w*0.16,-h*0.05,w*0.4,h*0.4,0,0,6.3,true);ctx.fill('evenodd');ctx.beginPath();ctx.arc(w*0.28,-h*0.02,Math.min(w,h)*0.07,0,6.3);ctx.fill()}
+  else if(e.kind==='corner'){ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-w/2,h/2);ctx.lineTo(-w/2,-h/2);ctx.lineTo(w/2,-h/2);ctx.stroke();var q=Math.min(w,h)*0.14;ctx.beginPath();ctx.moveTo(-w/2+q,h/2*0.55);ctx.lineTo(-w/2+q,-h/2+q);ctx.lineTo(w/2*0.55,-h/2+q);ctx.lineWidth=Math.max(1,lwp*0.5);ctx.stroke();ctx.save();ctx.translate(-w/2+q,-h/2+q);ctx.rotate(Math.PI/4);var dd=Math.min(w,h)*0.045;ctx.fillRect(-dd,-dd,2*dd,2*dd);ctx.restore()}
+  else if(e.kind==='banner'){var nn=h*0.35;ctx.beginPath();ctx.moveTo(-w/2,-h/2);ctx.lineTo(w/2,-h/2);ctx.lineTo(w/2-nn,0);ctx.lineTo(w/2,h/2);ctx.lineTo(-w/2,h/2);ctx.lineTo(-w/2+nn,0);ctx.closePath();if(e.fill===false)ctx.stroke();else ctx.fill()}
+  else if(e.kind==='flourish'){ctx.fillRect(-w/2,-lwp/2,w*0.42,lwp);ctx.fillRect(w/2-w*0.42,-lwp/2,w*0.42,lwp);ctx.save();ctx.rotate(Math.PI/4);var d2=Math.min(h,w*0.1)*0.5;ctx.fillRect(-d2,-d2,2*d2,2*d2);ctx.restore();[-1,1].forEach(function(sg){ctx.beginPath();ctx.arc(sg*w*0.09,0,d2*0.45,0,6.3);ctx.fill()})}
+  else if(e.kind==='archo'){var ar2=w/2;ctx.beginPath();ctx.moveTo(-w/2,h/2);ctx.lineTo(-w/2,-h/2+ar2);ctx.arc(0,-h/2+ar2,ar2,Math.PI,0);ctx.lineTo(w/2,h/2);ctx.stroke();ctx.save();ctx.scale(0.88,0.9);ctx.translate(0,h*0.05);ctx.lineWidth=Math.max(1,lwp*0.5);ctx.beginPath();ctx.moveTo(-w/2,h/2);ctx.lineTo(-w/2,-h/2+ar2);ctx.arc(0,-h/2+ar2,ar2,Math.PI,0);ctx.lineTo(w/2,h/2);ctx.stroke();ctx.restore()}
   else{
    ctx.beginPath();
    if(e.kind==='rect')rr(ctx,-w/2,-h/2,w,h,Math.min(w,h)*0.06);
@@ -3677,7 +3700,7 @@ function elLabel(e){
  if(e.type==='text')return 'نص: '+String(e.t||'').slice(0,18);
  if(e.type==='image')return 'صورة / شعار';
  if(e.type==='qr')return 'رمز QR';
- return 'شكل: '+({line:'خط',rect:'مستطيل',circle:'دائرة',diamond:'معيّن'}[e.kind]||'');
+ return 'شكل: '+({line:'خط',rect:'مستطيل',circle:'دائرة',diamond:'معيّن',star:'نجمة',crescent:'هلال',corner:'ركن زخرفي',banner:'شريط',flourish:'فاصل مزخرف',archo:'قوس'}[e.kind]||'');
 }
 function renderElUI(){
  var L=$('#elList');if(!L)return;L.innerHTML='';
@@ -3746,16 +3769,29 @@ function renderProps(){
 }
 $('#addText').onclick=function(){newEl({type:'text',t:'نص جديد',font:S.hf,sz:0.05,c:PAL[S.pal].title,b:true,al:'center',w:0.6})};
 $('#addQr').onclick=function(){newEl({type:'qr',t:S.qr||'https://',w:0.2})};
-$('#addImg').onclick=function(){replaceId=null;$('#imgFile').click()};
+$('#addImg').onclick=function(){replaceId=null;pendFrame=null;$('#imgFile').click()};
+var pendFrame=null;
 $('#imgFile').onchange=function(){
  var f=this.files&&this.files[0];if(!f)return;
  readImg(f,800,function(d){
   if(replaceId){var e=findEl(replaceId);if(e){e.src=d;change();renderProps()}replaceId=null}
+  else if(pendFrame){newEl({type:'image',src:d,w:0.3,shape:pendFrame,ring:true,ring2:true,sh:true,c:PAL[S.pal].accent});pendFrame=null}
   else newEl({type:'image',src:d,w:0.25,shape:'none',ring:false,c:PAL[S.pal].accent});
  });
  this.value='';
 };
 (function(){
+ var fb=$('#frameBtns');
+ [['arch','قوس محراب'],['circle','دائري'],['oval','بيضاوي'],['hex','سداسي'],['round','مستدير']].forEach(function(k){
+  var b=document.createElement('button');b.type='button';b.className='chip';b.textContent='+ '+k[1];
+  b.onclick=function(){replaceId=null;pendFrame=k[0];$('#imgFile').click()};fb.appendChild(b);
+ });
+ var ob=$('#ornBtns');
+ [['star','نجمة'],['crescent','هلال'],['corner','ركن زخرفي'],['banner','شريط عنوان'],['flourish','فاصل مزخرف'],['archo','قوس']].forEach(function(k){
+  var b=document.createElement('button');b.type='button';b.className='chip';b.textContent='+ '+k[1];
+  b.onclick=function(){var big=k[0]==='flourish'||k[0]==='banner';newEl({type:'shape',kind:k[0],w:k[0]==='flourish'?0.5:(k[0]==='banner'?0.6:(k[0]==='corner'?0.22:0.15)),h:k[0]==='flourish'?0.04:(k[0]==='banner'?0.1:(k[0]==='archo'?0.22:0.15)),lw:0.004,c:PAL[S.pal].accent,fill:!(k[0]==='corner'||k[0]==='flourish'||k[0]==='archo')})};
+  ob.appendChild(b);
+ });
  var sc=$('#shapeChips');
  [['line','+ خط'],['rect','+ مستطيل'],['circle','+ دائرة'],['diamond','+ معيّن']].forEach(function(k){
   var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=k[1];
@@ -3852,7 +3888,7 @@ updSheetInfo();
 var xf='png';
 (function(){
  var el=$('#xfChips');
- [['png','PNG — أعلى جودة'],['jpg','JPG — أخف حجمًا']].forEach(function(it){
+ [['png','PNG — أعلى جودة'],['jpg','JPG — أخف حجمًا'],['pdf','PDF — للطباعة']].forEach(function(it){
   var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=it[1];b.setAttribute('data-v',it[0]);
   b.onclick=function(){xf=it[0];$$('#xfChips .chip').forEach(function(c){c.setAttribute('aria-pressed',c===b)})};
   if(it[0]===xf)b.setAttribute('aria-pressed','true');el.appendChild(b);
@@ -3862,13 +3898,45 @@ var dl=null;
 try{if(window.claude&&window.claude.use){window.claude.use('downloads').then(function(d){dl=d;updNote()}).catch(function(){})}}catch(e){}
 function updNote(){$('#expNote').textContent=dl?'سيطلب منك المتصفح تأكيد الحفظ.':'إن لم يبدأ التنزيل، استخدم «عرض الصورة» ثم اضغط مطوّلًا على الصورة لحفظها في المعرض.'}
 updNote();
-function getBlob(){return new Promise(function(res){noSel=true;draw();cv.toBlob(res,xf==='jpg'?'image/jpeg':'image/png',0.92);noSel=false;draw()})}
-function fileName(){var t=(S.title||'تصميم').replace(/[\\/:*?"<>|\s]+/g,'-').slice(0,40);return t+(xf==='jpg'?'.jpg':'.png')}
+function getRaw(type,q){return new Promise(function(res){noSel=true;draw();cv.toBlob(res,type,q);noSel=false;draw()})}
+function pdfFrom(jpg,iw,ih){
+ return new Promise(function(res){var fr=new FileReader();fr.onload=function(){
+  var img=new Uint8Array(fr.result),pw,ph,k=72/150;
+  pw=iw*k;ph=ih*k;
+  var enc=new TextEncoder(),parts=[],off=[],len=0;
+  function add(x){var b=typeof x==='string'?enc.encode(x):x;parts.push(b);len+=b.length}
+  function obj(n,body){off[n]=len;add(n+' 0 obj\n'+body+'\nendobj\n')}
+  add('%PDF-1.4\n');
+  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+pw.toFixed(2)+' '+ph.toFixed(2)+'] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>');
+  off[4]=len;add('4 0 obj\n<< /Type /XObject /Subtype /Image /Width '+iw+' /Height '+ih+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+img.length+' >>\nstream\n');add(img);add('\nendstream\nendobj\n');
+  var c='q '+pw.toFixed(2)+' 0 0 '+ph.toFixed(2)+' 0 0 cm /Im0 Do Q';
+  obj(5,'<< /Length '+c.length+' >>\nstream\n'+c+'\nendstream');
+  var xr=len;add('xref\n0 6\n0000000000 65535 f \n');
+  for(var i=1;i<=5;i++)add(('0000000000'+off[i]).slice(-10)+' 00000 n \n');
+  add('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n'+xr+'\n%%EOF');
+  res(new Blob(parts,{type:'application/pdf'}));
+ };fr.readAsArrayBuffer(jpg)});
+}
+function getBlob(){
+ if(xf==='pdf')return getRaw('image/jpeg',0.95).then(function(b){return pdfFrom(b,cv.width,cv.height)});
+ return getRaw(xf==='jpg'?'image/jpeg':'image/png',0.92);
+}
+function fileName(){var t=(S.title||'تصميم').replace(/[\\/:*?"<>|\s]+/g,'-').slice(0,40);return t+(xf==='jpg'?'.jpg':xf==='pdf'?'.pdf':'.png')}
 function showModal(blob){
+ if(blob.type==='application/pdf'){var pa=document.createElement('a');pa.href=URL.createObjectURL(blob);pa.download=fileName();document.body.appendChild(pa);pa.click();pa.remove();toast('تم تجهيز ملف PDF');return}
  var url=URL.createObjectURL(blob);$('#modalImg').src=url;$('#modal').classList.add('on');
 }
 $('#modalClose').onclick=function(){$('#modal').classList.remove('on')};
 $('#btnView').onclick=function(){ensureFonts().then(getBlob).then(showModal)};
+$('#btnShare').onclick=function(){
+ ensureFonts().then(getBlob).then(function(blob){
+  var f=new File([blob],fileName(),{type:blob.type});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:S.title||'تصميم'}).catch(function(){})}
+  else{toast('المشاركة المباشرة غير مدعومة هنا، سيُحفظ الملف بدلًا منها');showModal(blob)}
+ });
+};
 $('#btnPng').onclick=function(){
  ensureFonts().then(getBlob).then(function(blob){
   if(dl){
