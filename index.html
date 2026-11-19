@@ -151,6 +151,7 @@ input[type=tel],input[type=email],input[type=date]{width:100%;padding:11px 12px;
   <div class="pane" data-pane="content">
    <label>العنوان الرئيسي</label><input type="text" data-k="title">
    <label>العنوان الفرعي</label><input type="text" data-k="sub">
+   <label>شريط تعريف (اختياري)</label><input type="text" data-k="tag">
    <label>النص</label><textarea data-k="body"></textarea>
    <label>اسم المدعو / المكرّم (اختياري)</label><input type="text" data-k="guest">
    <label>عنوان الاسم (المكرّم/ة، الطالب/ة، الأستاذ/ة…)</label><input type="text" data-k="gl">
@@ -158,6 +159,7 @@ input[type=tel],input[type=email],input[type=date]{width:100%;padding:11px 12px;
    <h3>الترجمة الفرنسية (اختيارية)</h3>
    <label>Titre</label><input type="text" data-k="titleFr" dir="ltr" style="text-align:left">
    <label>Sous-titre</label><input type="text" data-k="subFr" dir="ltr" style="text-align:left">
+   <label>Bandeau (facultatif)</label><input type="text" data-k="tagFr" dir="ltr" style="text-align:left">
    <label>Texte</label><textarea data-k="bodyFr" dir="ltr" style="text-align:left"></textarea>
    <h3>التفاصيل (التاريخ، الوقت، المكان…)</h3>
    <div id="dRows"></div>
@@ -2832,18 +2834,18 @@ var TPLS=[
   titleFr:'Cérémonie de remise des diplômes de la 3ᵉ promotion',orgFr:'Centre Seid Al Qura’i',subFr:'Promotion Cheikh Oumar Abdoul Kader DIALLO',bodyFr:'La Direction du Centre Seid Al Qura’i vous invite à la cérémonie de remise des diplômes des étudiants de la 3ᵉ promotion',
   dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['Tél','77 87 33 85  |  76 92 57 57']],
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
- {id:'gwgen',n:'إعلان عريض 16:9 (عربي | فرنسي)',s:'لافتات وشاشات — يتبدّل شعارك تلقائيًا',k:['mosque','school','tahfeez','assoc','charity'],fmt:'wide',lay:'gw',pal:'navygold',hf:'Cairo',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
+ {id:'gwgen',n:'إعلان عريض 16:9 (عربي | فرنسي)',s:'لافتات وشاشات — يتبدّل شعارك تلقائيًا',k:['mosque','school','tahfeez','assoc','charity'],fmt:'wide',lay:'gw',pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
   org:'........',title:'حفل ........',sub:'(........)',body:'........',
   d:[['الموعد','........'],['الساعة','........'],['المكان','........'],['','']],verse:'',
   contact:'حضوركم شرف لنا',
   titleFr:'Cérémonie ........',orgFr:'........',subFr:'« ........ »',bodyFr:'........',
   dFr:[['Date','........'],['Heure','........'],['Lieu','........'],['','']],
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
- {id:'seidwide',ex:true,n:'إعلان تخريج عريض — سيد القراء',s:'16:9 عربي | فرنسي بالشعار الأصلي',fmt:'wide',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'Cairo',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
-  org:'مركز سيد القراء',title:'حفل تخريج',sub:'(دفعة الشيخ عمر عبد القادر جلو)',body:'الدفعة الثالثة من طلاب مركز سيد القراء',
-  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الساعة','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','في قصر معتمرات بماكو (C.I.C.B)'],['الهاتف','\u200E77 87 33 85\u200E  |  \u200E76 92 57 57\u200E']],verse:'',
+ {id:'seidwide',ex:true,n:'إعلان تخريج عريض — سيد القراء',s:'16:9 عربي | فرنسي بالشعار الأصلي',fmt:'wide',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
+  org:'مركز سيد القراء',title:'حفل تخريج الدفعة الثالثة',tag:'من طلاب مركز سيد القراء',sub:'دفعة الشيخ عمر عبد القادر جلو',body:'تتشرّف إدارة مركز سيد القراء بدعوتكم لحضور حفل تخريج الدفعة الثالثة من طلابه.',
+  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الوقت','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['الهاتف','\u200E77 87 33 85\u200E  |  \u200E76 92 57 57\u200E']],verse:'',
   contact:'حضوركم شرف لنا',
-  titleFr:'Cérémonie de remise des diplômes',orgFr:'Centre Seid Al Qura’i',subFr:'« Promotion Cheikh Oumar Abdoul Kader DIALLO »',bodyFr:'De la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',
+  titleFr:'Cérémonie de remise des diplômes',tagFr:'de la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',orgFr:'Centre Seid Al Qura’i',subFr:'Promotion Cheikh Oumar Abdoul Kader Diallo',bodyFr:'La Direction du Centre Seid Al Qura’i a l’honneur de vous inviter à la cérémonie de remise des diplômes de sa 3ᵉ promotion.',
   dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['Tél','77 87 33 85  |  76 92 57 57']],
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
  {id:'seid',ex:true,n:'دعوة تخريج — سيد القراء',s:'حفل تخريج الدفعة الثالثة',fmt:'p45',own:true,logoPreset:true,pal:'seid',hf:'Aref Ruqaa',bf:'Amiri',pat:'stars',frame:'double',align:'center',basmala:true,
@@ -2869,7 +2871,7 @@ function fromTpl(t,keep){
   title:t.title,sub:t.sub,body:t.body,verse:t.verse||'',ts:1,box:true,accent:null,
   titleFr:t.titleFr||(FR[t.id]||[])[0]||'',subFr:t.subFr||(FR[t.id]||[])[1]||'',bodyFr:t.bodyFr||(FR[t.id]||[])[2]||'',bgDim:0.5,
   lay:t.lay||'std',els:[],hide:{},logoSc:1,logoShape:'auto',logoRing:true,side:'front',flag:!!t.flag,gl:t.gl||'المكرّم/ة:',gbig:!!t.gbig,kind:'all',strip:!!t.strip,sigTitle:t.sigTitle||'',sigName:t.sigName||'',qr:'',memNo:'000001',addr:'',addrFr:'',ph1:'',ph2:'',wa:'',mail:'',web:'',guest:'',names:'',numStart:'',cols:'2',cap:!!t.cap,orgFr:t.orgFr||'',contactFr:t.contactFr||'',dFr:(t.dFr||[]).map(function(x){return {k:x[0],v:x[1]}}),
-  phOn:!!t.ph,phShape:t.ph||'circle',phSz:0.2,photo:null,
+  tag:t.tag||'',tagFr:t.tagFr||'',phOn:!!t.ph,phShape:t.ph||'circle',phSz:0.2,photo:null,
   d:t.d.map(function(x){return {k:x[0],v:x[1]}})};
  while(o.d.length<6)o.d.push({k:'',v:''});
  while(o.dFr.length<4)o.dFr.push({k:'',v:''});
@@ -3375,79 +3377,119 @@ function drawGP(ctx,W,H,u,pal){
  if(ph){ctx.direction='ltr';var c3=gpFit(ctx,'Cairo','800',fz2*0.95,ph,(W-2*gx)*0.3,1);var tw=ctx.measureText(ph).width;ctx.fillText(ph,W/2+fh*0.35,fy+fh/2);phoneIcon(ctx,W/2-tw/2-fh*0.2,fy+fh/2,fh*0.7,'#0b1f48')}
  ctx.restore();
 }
+function grRib(ctx,x,y,w,h,tip,navy1,navy2,gold,lw){
+ function path(ix,iy,iw,ih,t){ctx.beginPath();ctx.moveTo(ix+t,iy);ctx.lineTo(ix+iw-t,iy);ctx.quadraticCurveTo(ix+iw-t*0.3,iy+ih*0.1,ix+iw,iy+ih/2);ctx.quadraticCurveTo(ix+iw-t*0.3,iy+ih*0.9,ix+iw-t,iy+ih);ctx.lineTo(ix+t,iy+ih);ctx.quadraticCurveTo(ix+t*0.3,iy+ih*0.9,ix,iy+ih/2);ctx.quadraticCurveTo(ix+t*0.3,iy+ih*0.1,ix+t,iy);ctx.closePath()}
+ ctx.save();var g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,navy1);g.addColorStop(1,navy2);
+ path(x,y,w,h,tip);ctx.fillStyle=g;ctx.shadowColor='rgba(0,0,0,0.3)';ctx.shadowBlur=h*0.16;ctx.shadowOffsetY=h*0.05;ctx.fill();ctx.shadowColor='transparent';
+ ctx.strokeStyle=gold;ctx.lineWidth=lw;ctx.stroke();
+ ctx.globalAlpha=0.75;ctx.lineWidth=Math.max(1,lw*0.4);path(x+h*0.07,y+h*0.1,w-h*0.14,h*0.8,tip*0.85);ctx.stroke();
+ [[x+tip*0.55,1],[x+w-tip*0.55,-1]].forEach(function(e){ctx.globalAlpha=1;ctx.fillStyle=gold;ctx.save();ctx.translate(e[0],y+h/2);ctx.rotate(Math.PI/4);ctx.fillRect(-h*0.05,-h*0.05,h*0.1,h*0.1);ctx.restore()});
+ ctx.restore();
+}
+function grRos(ctx,cx,cy,r,gold){
+ ctx.save();ctx.translate(cx,cy);ctx.strokeStyle=gold;ctx.fillStyle=gold;ctx.lineWidth=Math.max(1.5,r*0.14);
+ for(var i=0;i<4;i++){ctx.save();ctx.rotate(i*Math.PI/4);ctx.strokeRect(-r*0.62,-r*0.62,r*1.24,r*1.24);ctx.restore()}
+ ctx.beginPath();ctx.arc(0,0,r*0.2,0,6.3);ctx.fill();ctx.restore();
+}
+function grTile(ctx,x,y,sz,navy,gold,sx,sy){
+ ctx.save();ctx.translate(x,y);ctx.scale(sx,sy);
+ var g=ctx.createLinearGradient(0,0,sz,sz);g.addColorStop(0,'#1b4287');g.addColorStop(1,navy);
+ rr(ctx,0,0,sz,sz,sz*0.12);ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,sz*0.03);ctx.stroke();
+ ctx.save();rr(ctx,0,0,sz,sz,sz*0.12);ctx.clip();ctx.strokeStyle=gold;ctx.globalAlpha=0.8;ctx.lineWidth=Math.max(1.2,sz*0.014);
+ var c=sz*0.46;for(var k=0;k<2;k++){ctx.save();ctx.translate(c,c);ctx.rotate(k*Math.PI/4);ctx.strokeRect(-sz*0.26,-sz*0.26,sz*0.52,sz*0.52);ctx.restore()}
+ for(var q=1;q<=3;q++){ctx.beginPath();ctx.arc(0,0,sz*0.28*q,0,Math.PI/2);ctx.stroke()}
+ ctx.beginPath();ctx.arc(c,c,sz*0.07,0,6.3);ctx.fillStyle=gold;ctx.fill();ctx.restore();ctx.restore();
+}
 function drawGW(ctx,W,H,u,pal){
- var navy=pal.title,gold=pal.accent,red=S.bcol||'#8b1a1a',m=W*0.035;
- // corner swooshes
- [[0,0,1,1],[W,H,-1,-1]].forEach(function(c){
-  ctx.save();ctx.translate(c[0],c[1]);ctx.scale(c[2],c[3]);
-  var g=ctx.createLinearGradient(0,0,W*0.2,H*0.25);g.addColorStop(0,navy);g.addColorStop(1,'#2a5db0');
-  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W*0.17,0);ctx.bezierCurveTo(W*0.09,H*0.03,W*0.03,H*0.1,0,H*0.2);ctx.closePath();ctx.fillStyle=g;ctx.fill();
-  ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,u*0.004);ctx.beginPath();ctx.moveTo(W*0.175,0);ctx.bezierCurveTo(W*0.1,H*0.04,W*0.04,H*0.11,0,H*0.215);ctx.stroke();
-  ctx.lineWidth=Math.max(1,u*0.0015);ctx.beginPath();ctx.moveTo(W*0.19,0);ctx.bezierCurveTo(W*0.11,H*0.05,W*0.05,H*0.12,0,H*0.235);ctx.stroke();
-  ctx.restore();
+ var navy=pal.title,gold=pal.accent,ink=pal.ink,serif='Amiri';
+ var nv1='#1e4a92';
+ // frame
+ var fm=H*0.02;
+ ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(4,u*0.0055);rr(ctx,fm,fm,W-2*fm,H-2*fm,u*0.022);ctx.stroke();
+ ctx.globalAlpha=0.7;ctx.lineWidth=Math.max(1.5,u*0.002);rr(ctx,fm*1.9,fm*1.9,W-3.8*fm,H-3.8*fm,u*0.016);ctx.stroke();ctx.restore();
+ var ts=H*0.112;
+ grTile(ctx,fm*1.2,fm*1.2,ts,navy,gold,1,1);grTile(ctx,W-fm*1.2,fm*1.2,ts,navy,gold,-1,1);grTile(ctx,fm*1.2,H-fm*1.2,ts,navy,gold,1,-1);grTile(ctx,W-fm*1.2,H-fm*1.2,ts,navy,gold,-1,-1);
+ // logo medallion
+ var ly=H*0.127,lg=H*0.19,R=lg*0.62;
+ ctx.save();ctx.beginPath();ctx.arc(W/2,ly,R*1.06,0,6.3);ctx.fillStyle=pal.bg1;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(3,u*0.004);ctx.stroke();ctx.restore();
+ if(logoImg)drawLogo(ctx,logoImg,W/2,ly,lg,pal);
+ var mx=W*0.07,hw=W*0.405,xa=W-mx-hw,xf=mx;
+ // kickers
+ [[xa,S.org,'rtl',S.bf],[xf,S.orgFr,'ltr',serif]].forEach(function(k){
+  var t=String(k[1]||'').trim();if(!t)return;var cx=k[0]+hw/2;
+  ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=k[2];
+  var f=gpFit(ctx,k[3],'700',H*0.046,t,hw*0.6,1);ctx.fillStyle=navy;ctx.fillText(t,cx,H*0.105);
+  ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);var lw2=hw*0.34;
+  ctx.beginPath();ctx.moveTo(cx-lw2,H*0.152);ctx.lineTo(cx-H*0.02,H*0.152);ctx.moveTo(cx+H*0.02,H*0.152);ctx.lineTo(cx+lw2,H*0.152);ctx.stroke();
+  grRos(ctx,cx,H*0.152,H*0.014,gold);ctx.restore();
  });
- // inner frame
- ctx.save();ctx.strokeStyle=gold;ctx.globalAlpha=0.55;ctx.lineWidth=Math.max(1.5,u*0.002);rr(ctx,m*1.1,m*0.9,W-m*2.2,H-m*1.8,u*0.03);ctx.stroke();ctx.restore();
- var hw=(W-2*m-W*0.045)/2,gx=W*0.045/2;
- var xa=W/2+gx,xf=W/2-gx-hw; // arabic right half, french left half
- // logo
- var lg=H*0.21,ly=H*0.115;
- if(logoImg){drawLogo(ctx,logoImg,W/2,ly+lg*0.02,lg,pal)}
- gwOrn(ctx,W/2+lg*0.62,ly,1,W*0.17,gold,H*0.014);gwOrn(ctx,W/2-lg*0.62,ly,-1,W*0.17,gold,H*0.014);
  // center divider
- var dy0=H*0.33,dy1=H*0.77;ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.0022);ctx.beginPath();ctx.moveTo(W/2,dy0);ctx.lineTo(W/2,dy1);ctx.stroke();
- ctx.translate(W/2,(dy0+dy1)/2);ctx.rotate(Math.PI/4);ctx.fillStyle=gold;ctx.fillRect(-H*0.012,-H*0.012,H*0.024,H*0.024);ctx.restore();
- function half(x,dir,fam,o){
-  var rtl=dir==='rtl',cx=x+hw/2;
-  ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=dir;
-  // title banner
-  var by=H*0.215,bh=H*0.135;
-  gwPill(ctx,x,by,hw,bh,navy,gold);
-  ctx.fillStyle='#ffffff';fitFont(ctx,fam,'700',bh*(rtl?0.62:0.36),o.title||'',hw*0.86);
-  if(!rtl){var tl=wrap(ctx,o.title||'',hw*0.86);if(tl.length>1){var fz=bh*0.34;fnt(ctx,fam,'700',fz);tl=wrap(ctx,o.title,hw*0.86);tl.slice(0,2).forEach(function(l,i){ctx.fillText(l,cx,by+bh/2+fz*1.1*(i-(Math.min(2,tl.length)-1)/2))})}else ctx.fillText(o.title||'',cx,by+bh/2)}
-  else ctx.fillText(o.title||'',cx,by+bh/2);
-  // body (big navy)
-  var y=by+bh+H*0.025,txt=o.body||o.org||'';
-  var bs=H*0.052;fnt(ctx,fam,'700',bs);var bl=wrap(ctx,txt,hw*0.98);if(bl.length>1){var b1=bs*0.82;fnt(ctx,fam,'700',b1);var t1=wrap(ctx,txt,hw*0.98);if(t1.length===1){bs=b1;bl=t1}else{bs*=0.86;fnt(ctx,fam,'700',bs);bl=wrap(ctx,txt,hw*0.98);if(bl.length>2)bl=wrap(ctx,txt,hw*0.7)}}
-  ctx.fillStyle=navy;bl.slice(0,3).forEach(function(l,i){ctx.fillText(l,cx,y+bs*1.2*(i+0.5))});y+=bl.slice(0,3).length*bs*1.2+H*0.02;
-  // sub pill
-  if(String(o.sub||'').trim()){
-   var sh=H*0.095,sg=ctx.createLinearGradient(0,y,0,y+sh);sg.addColorStop(0,'#fffdf4');sg.addColorStop(1,'#f6e4b8');
-   ctx.save();rr(ctx,x+hw*0.03,y,hw*0.94,sh,sh*0.5);ctx.fillStyle=sg;ctx.shadowColor='rgba(0,0,0,0.18)';ctx.shadowBlur=sh*0.18;ctx.shadowOffsetY=sh*0.05;ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,sh*0.035);ctx.stroke();ctx.restore();
-   var ss=sh*(rtl?0.5:0.36);fnt(ctx,fam,'700',ss);var sl=wrap(ctx,o.sub,hw*0.84);if(sl.length>1){fnt(ctx,fam,'700',ss);sl=wrap(ctx,o.sub,hw*0.6)}
-   ctx.fillStyle=red;sl.slice(0,2).forEach(function(l,i){ctx.fillText(l,cx,y+sh/2+ss*1.15*(i-(Math.min(2,sl.length)-1)/2))});
-   y+=sh+H*0.025;
+ var d0=H*0.255,d1=H*0.815;ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(W/2,d0);ctx.lineTo(W/2,d1);ctx.stroke();ctx.restore();
+ grRos(ctx,W/2,(d0+d1)/2+H*0.02,H*0.017,gold);
+ function col(x,dir,fam,bfam,o){
+  var rtl=dir==='rtl',cx=x+hw/2;ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=dir;
+  // title ribbon
+  var ty=H*0.245,th=H*0.095;grRib(ctx,x,ty,hw,th,th*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));
+  var t=gpFit(ctx,fam,'700',th*(rtl?0.58:0.5),o.title,hw*0.78,1);ctx.fillStyle='#fff';ctx.fillText(o.title,cx,ty+th/2);
+  // tag pill
+  var y=ty+th+H*0.012;
+  if(String(o.tag||'').trim()){
+   var ph=H*0.07,g=ctx.createLinearGradient(0,y,0,y+ph);g.addColorStop(0,'#fffdf4');g.addColorStop(1,'#f6e4b8');
+   ctx.save();rr(ctx,x+hw*0.08,y,hw*0.84,ph,ph*0.45);ctx.fillStyle=g;ctx.shadowColor='rgba(0,0,0,0.16)';ctx.shadowBlur=ph*0.15;ctx.shadowOffsetY=ph*0.04;ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,u*0.003);ctx.stroke();ctx.restore();
+   var tg=gpFit(ctx,bfam,'700',ph*(rtl?0.5:0.4),o.tag,hw*0.76,1);if(tg.s<ph*(rtl?0.5:0.4)*0.72){fnt(ctx,bfam,'700',ph*(rtl?0.42:0.34));var tl2=wrap(ctx,o.tag,hw*0.55);tg={l:tl2.slice(0,2),s:ph*(rtl?0.42:0.34)}}ctx.fillStyle=navy;
+   tg.l.forEach(function(l,i){ctx.fillText(l,cx,y+ph/2+tg.s*1.12*(i-(tg.l.length-1)/2))});
+   y+=ph+H*0.014;
   }
-  // details
-  var rows=o.rows.filter(function(r){return String(r.v).trim()}),icons=[calIcon,clockIcon,pinIcon,phoneIcon],rh=Math.min(H*0.1,(H*0.845-y)/Math.max(1,rows.length));
+  // invite
+  var b=gpFit(ctx,bfam,'600',H*0.029,o.body,hw*0.98,2);ctx.fillStyle=ink;
+  b.l.forEach(function(l,i){ctx.fillText(l,cx,y+b.s*1.4*(i+0.5))});y+=2*b.s*1.4+H*0.012;
+  // rosette divider
+  var dl=hw*0.3;ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(cx-dl,y);ctx.lineTo(cx-H*0.02,y);ctx.moveTo(cx+H*0.02,y);ctx.lineTo(cx+dl,y);ctx.stroke();grRos(ctx,cx,y,H*0.013,gold);ctx.restore();y+=H*0.022;
+  // gold ribbon
+  if(String(o.sub||'').trim()){
+   var gh=H*0.066;grRib(ctx,x+hw*0.03,y,hw*0.94,gh,gh*0.55,'#fff0b8','#d0a53a','#b8891f',Math.max(2,u*0.003));
+   var sg=gpFit(ctx,bfam,'700',gh*(rtl?0.52:0.4),o.sub,hw*0.72,1);ctx.fillStyle=navy;ctx.fillText(o.sub,cx,y+gh/2);
+   y+=gh+H*0.016;
+  }
+  // rows
+  var icons=[calIcon,clockIcon,pinIcon],rows=o.rows.slice(0,3),rh=H*0.056,step=H*0.064;
   rows.forEach(function(r,i){
-   var ry=y+rh*i+rh/2,isz=rh*0.72,ix=rtl?x+hw-isz/2-hw*0.01:x+isz/2+hw*0.01;
-   icons[i%4](ctx,ix,ry,isz,navy);
-   ctx.textAlign=rtl?'right':'left';
-   var tx=rtl?ix-isz*0.75:ix+isz*0.75,room=hw-isz*1.0,vs=rh*0.5,kk=String(r.k||'').trim();
-   if(rtl&&kk){ // key pill on the right, value left of it
-    fnt(ctx,fam,'700',rh*0.4);var kw=ctx.measureText(kk).width+rh*0.55;
-    gwPill(ctx,tx-kw,ry-rh*0.34,kw,rh*0.68,navy,gold);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(kk,tx-kw/2,ry);
-    ctx.textAlign='right';tx=tx-kw-rh*0.2;room-=kw+rh*0.2;
-    fnt(ctx,fam,'700',vs);var vl=wrap(ctx,r.v,room);if(vl.length>1){vs*=0.8;fnt(ctx,fam,'700',vs);vl=wrap(ctx,r.v,room)}
-    ctx.fillStyle=red;vl.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl.length)-1)/2))});
-   }else{
-    var line=(kk?kk+' : ':'')+r.v;vs=rh*0.42;fnt(ctx,fam,'700',vs);var vl2=wrap(ctx,line,room);if(vl2.length>1){vs*=0.82;fnt(ctx,fam,'700',vs);vl2=wrap(ctx,line,room)}
-    if(kk&&vl2.length===1){fnt(ctx,fam,'700',vs);var kw2=ctx.measureText(kk+' : ').width;ctx.fillStyle=navy;ctx.fillText(kk+' :',tx,ry);ctx.fillStyle=red;ctx.fillText(String(r.v),tx+kw2,ry);}
-    else{ctx.fillStyle=red;vl2.slice(0,2).forEach(function(l,j){ctx.fillText(l,tx,ry+vs*1.1*(j-(Math.min(2,vl2.length)-1)/2))})}
-   }
+   if(!String(r.v).trim())return;
+   var ry=y+step*i,pw=hw*0.97,px=x+hw*0.015;
+   ctx.save();rr(ctx,px,ry,pw,rh,rh*0.3);var rg=ctx.createLinearGradient(0,ry,0,ry+rh);rg.addColorStop(0,'#fffdf6');rg.addColorStop(1,'#f9edd0');ctx.fillStyle=rg;ctx.shadowColor='rgba(0,0,0,0.12)';ctx.shadowBlur=rh*0.2;ctx.shadowOffsetY=rh*0.05;ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.stroke();ctx.restore();
+   var tw2=rh*1.25,tx0=rtl?px+pw-tw2:px;
+   ctx.save();rr(ctx,tx0,ry,tw2,rh,rh*0.3);var ng=ctx.createLinearGradient(0,ry,0,ry+rh);ng.addColorStop(0,nv1);ng.addColorStop(1,navy);ctx.fillStyle=ng;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.stroke();ctx.restore();
+   icons[i](ctx,tx0+tw2/2,ry+rh/2,rh*0.62,gold);
+   var kk=String(r.k||'').trim(),room=pw-tw2-rh*0.5,sz=rh*0.44;
+   ctx.save();ctx.textBaseline='middle';ctx.direction=dir;ctx.textAlign=rtl?'right':'left';
+   var ex=rtl?px+pw-tw2-rh*0.28:px+tw2+rh*0.28;
+   var full=(kk?kk+' : ':'')+r.v;fnt(ctx,bfam,'700',sz);var lines=wrap(ctx,full,room);
+   if(lines.length>1){sz*=0.82;fnt(ctx,bfam,'700',sz);lines=wrap(ctx,full,room)}
+   if(lines.length===1&&kk){
+    fnt(ctx,bfam,'700',sz);var kw=ctx.measureText(kk+' : ').width;ctx.fillStyle=navy;ctx.fillText(kk+' :',ex,ry+rh/2);
+    fnt(ctx,bfam,'600',sz);ctx.fillStyle=ink;ctx.fillText(String(r.v),rtl?ex-kw:ex+kw,ry+rh/2);
+   }else{ctx.fillStyle=ink;lines.slice(0,2).forEach(function(l,j){ctx.fillText(l,ex,ry+rh/2+sz*1.1*(j-(Math.min(2,lines.length)-1)/2))})}
+   ctx.restore();
   });
+  y+=step*3+H*0.004;
+  // honor ribbon
+  var hh=H*0.062;grRib(ctx,x+hw*0.02,y,hw*0.96,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
+  var hs=gpFit(ctx,bfam,rtl?'700':'600',hh*(rtl?0.5:0.44),o.hon||'',hw*0.74,1);ctx.fillStyle='#fff';ctx.fillText(o.hon||'',cx,y+hh/2);
   ctx.restore();
  }
- half(xa,'rtl',S.bf,{title:S.title,body:S.body,org:S.org,sub:S.sub,rows:(S.d||[])});
- half(xf,'ltr','Cairo',{title:S.titleFr,body:S.bodyFr,org:S.orgFr,sub:S.subFr,rows:(S.dFr||[])});
- // bottom banner
- var bh2=H*0.105,by2=H*0.865,bx2=m*1.4,bw2=W-2*bx2;
- gwPill(ctx,bx2,by2,bw2,bh2,navy,gold);
- ctx.save();ctx.textBaseline='middle';ctx.fillStyle='#fff';
- ctx.textAlign='center';ctx.direction='rtl';fitFont(ctx,S.bf,'700',bh2*0.42,S.contact||'',bw2*0.4);ctx.fillText(S.contact||'',bx2+bw2*0.74,by2+bh2/2);
- ctx.direction='ltr';fitFont(ctx,'Cairo','600',bh2*0.3,S.contactFr||'',bw2*0.4);var cl=wrap(ctx,S.contactFr||'',bw2*0.4),cf=bh2*0.3;fnt(ctx,'Cairo','600',cf);cl.slice(0,2).forEach(function(l,i){ctx.fillText(l,bx2+bw2*0.26,by2+bh2/2+cf*1.1*(i-(Math.min(2,cl.length)-1)/2))});
- ctx.translate(bx2+bw2/2,by2+bh2/2);ctx.rotate(Math.PI/4);ctx.fillStyle=gold;ctx.fillRect(-bh2*0.1,-bh2*0.1,bh2*0.2,bh2*0.2);ctx.restore();
+ col(xa,'rtl',S.hf,S.bf,{title:S.title,tag:S.tag,body:S.body,sub:S.sub,rows:S.d||[],hon:S.contact});
+ col(xf,'ltr',serif,serif,{title:S.titleFr,tag:S.tagFr,body:S.bodyFr,sub:S.subFr,rows:S.dFr||[],hon:S.contactFr});
+ // phones
+ var ph=(S.d[3]&&String(S.d[3].v).trim())?String(S.d[3].v):'';
+ if(ph){
+  var py=H*0.935;ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction='ltr';
+  var pf=gpFit(ctx,'Cairo','800',H*0.036,ph,W*0.3,1),tw=ctx.measureText(ph).width;ctx.fillStyle=navy;ctx.fillText(ph,W/2+H*0.03,py);
+  var ix=W/2+H*0.03-tw/2-H*0.04;ctx.beginPath();ctx.arc(ix,py,H*0.026,0,6.3);ctx.strokeStyle=gold;ctx.lineWidth=Math.max(2,u*0.003);ctx.stroke();phoneIcon(ctx,ix,py,H*0.036,navy);
+  ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);var lx0=W*0.3,lx1=W/2-tw/2-H*0.09;
+  ctx.beginPath();ctx.moveTo(lx0,py);ctx.lineTo(lx1,py);ctx.moveTo(W-lx0,py);ctx.lineTo(W-lx1,py);ctx.stroke();
+  [lx0,W-lx0].forEach(function(dx){ctx.save();ctx.translate(dx,py);ctx.rotate(Math.PI/4);ctx.fillStyle=gold;ctx.fillRect(-H*0.006,-H*0.006,H*0.012,H*0.012);ctx.restore()});
+  ctx.restore();
+ }
 }
 function drawBi(ctx,W,H,u,pal,fr){
  var navy=pal.title,green=pal.accent,cols=W>=H*1.3,strip=!!S.strip&&cols;
