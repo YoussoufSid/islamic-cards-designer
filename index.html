@@ -3411,8 +3411,8 @@ function drawGW(ctx,W,H,u,pal){
  grTile(ctx,fm*1.2,fm*1.2,ts,navy,gold,1,1);grTile(ctx,W-fm*1.2,fm*1.2,ts,navy,gold,-1,1);grTile(ctx,fm*1.2,H-fm*1.2,ts,navy,gold,1,-1);grTile(ctx,W-fm*1.2,H-fm*1.2,ts,navy,gold,-1,-1);
  // logo medallion
  var ly=H*0.127,lg=H*0.19,R=lg*0.62;
- ctx.save();ctx.beginPath();ctx.arc(W/2,ly,R*1.06,0,6.3);ctx.fillStyle=pal.bg1;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(3,u*0.004);ctx.stroke();ctx.restore();
- if(logoImg)drawLogo(ctx,logoImg,W/2,ly,lg,pal);
+ if(!logoImg){ctx.save();ctx.beginPath();ctx.arc(W/2,ly,R*1.06,0,6.3);ctx.fillStyle=pal.bg1;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(3,u*0.004);ctx.stroke();ctx.restore()}
+ if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,W/2,ly,lg*1.25,pal);ctx.restore()}
  var mx=W*0.07,hw=W*0.405,xa=W-mx-hw,xf=mx;
  // kickers
  [[xa,S.org,'rtl',S.bf],[xf,S.orgFr,'ltr',serif]].forEach(function(k){
@@ -3700,7 +3700,7 @@ function draw(){
 function drawLogo(ctx,im,cx,cy,size,pal){
  size*=(S.logoSc||1);
  var ar0=im.width/im.height,shape=S.logoShape||'auto';
- if(shape==='auto')shape=(ar0>1.25||ar0<0.8)?'rect':'circle';
+ if(shape==='auto')shape='none';
  if(shape==='none'){var sc0=Math.min(size*1.35/im.width,size/im.height);ctx.drawImage(im,cx-im.width*sc0/2,cy-im.height*sc0/2,im.width*sc0,im.height*sc0);return}
  if(shape==='rect'){
   var bw=size*1.35,bh=size,sc=Math.min(bw/im.width,bh/im.height),w=im.width*sc,h=im.height*sc,p=size*0.04;
