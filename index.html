@@ -2650,7 +2650,8 @@ var FORMATS=[
  {id:'a4',n:'ملصق A4',w:1240,h:1754},
  {id:'banner',n:'لافتة عريضة',w:2400,h:800},
  {id:'wide',n:'شاشة / ملصق 16:9',w:1920,h:1080},
- {id:'ban3',n:'لافتة 3م × 1.5م',w:3000,h:1500}
+ {id:'ban3',n:'لافتة 3م × 1.5م',w:3000,h:1500},
+ {id:'a5',n:'مطوية A5 (غلاف)',w:1240,h:1754}
 ];
 var PAL={
  emerald:{n:'زمردي',bg1:'#0e4d3a',bg2:'#06281f',title:'#fff8e1',ink:'#e8f1ec',accent:'#d4af37'},
@@ -2849,6 +2850,21 @@ var TPLS=[
   titleFr:'Cérémonie de remise des diplômes',tagFr:'de la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',orgFr:'Centre Seid Al Qura’i',subFr:'Promotion Cheikh Oumar Abdoul Kader Diallo',bodyFr:'La Direction du Centre Seid Al Qura’i a l’honneur de vous inviter à la cérémonie de remise des diplômes de sa 3ᵉ promotion.',
   dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['Tél','93 39 18 36']],
   contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
+ {id:'seidinside',ex:true,n:'مطوية — الصفحة الداخلية (سيد القراء)',s:'A4 أفقي: عربي يمين | فرنسي يسار',fmt:'a4l',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
+  org:'مركز سيد القراء',title:'حفل تخريج الدفعة الثالثة',tag:'من طلاب مركز سيد القراء',sub:'دفعة الشيخ عمر عبد القادر جلو',body:'تتشرّف إدارة مركز سيد القراء بدعوتكم لحضور حفل تخريج الدفعة الثالثة من طلابه.',
+  d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الوقت','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['','']],verse:'',
+  contact:'حضوركم شرف لنا',
+  titleFr:'Cérémonie de remise des diplômes',tagFr:'de la 3ᵉ promotion des étudiants du Centre Seid Al Qura’i',orgFr:'Centre Seid Al Qura’i',subFr:'Promotion Cheikh Oumar Abdoul Kader Diallo',bodyFr:'La Direction du Centre Seid Al Qura’i a l’honneur de vous inviter à la cérémonie de remise des diplômes de sa 3ᵉ promotion.',
+  dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['','']],
+  contactFr:'Votre présence sera pour nous un grand honneur.',sigTitle:'',sigName:''},
+ {id:'seidcover',ex:true,n:'مطوية — الغلاف الأمامي (سيد القراء)',s:'شعار كبير + اسم المركز + العنوان',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
+  org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل تخريج الدفعة الثالثة',titleFr:'Cérémonie de remise des diplômes de la 3ᵉ promotion',tag:'',tagFr:'',sub:'',subFr:'',body:'',bodyFr:'',
+  d:[['',''],['',''],['',''],['','']],dFr:[['',''],['',''],['',''],['','']],contact:'',contactFr:''},
+ {id:'seidvip',ex:true,n:'دعوة شخصية — ظهر الغلاف (سيد القراء)',s:'اسم الضيف بالعربية والفرنسية قابل للكتابة',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
+  org:'بطاقة دعوة خاصة',orgFr:'Invitation d’honneur',title:'',titleFr:'',tag:'إلى صاحب الفضيلة / السعادة',tagFr:'À Son Excellence / Monsieur / Madame',sub:'........................',subFr:'........................',
+  body:'تتشرّف إدارة مركز سيد القراء بدعوتكم الكريمة لحضور حفل تخريج الدفعة الثالثة',bodyFr:'La Direction du Centre Seid Al Qura’i vous invite cordialement à la cérémonie de remise des diplômes de la 3ᵉ promotion.',
+  d:[['','الأحد 6 ديسمبر 2026م — 9:00 صباحًا'],['','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['',''],['','\u200E93 39 18 36\u200E']],dFr:[['','Dimanche 6 décembre 2026 — 9 h 00'],['','Centre International de Conférences de Bamako'],['',''],['','']],
+  contact:'حضوركم شرف لنا',contactFr:'Votre présence sera pour nous un grand honneur.'},
  {id:'seidban',ex:true,n:'لافتة 3×1.5م — سيد القراء',s:'لافتة 2:1 عربي | فرنسي',fmt:'ban3',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
   org:'مركز سيد القراء',title:'حفل تخريج الدفعة الثالثة',tag:'من طلاب مركز سيد القراء',sub:'دفعة الشيخ عمر عبد القادر جلو',body:'تتشرّف إدارة مركز سيد القراء بدعوتكم لحضور حفل تخريج الدفعة الثالثة من طلابه.',
   d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الوقت','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['الهاتف','\u200E93 39 18 36\u200E']],verse:'',
@@ -3408,22 +3424,70 @@ function grTile(ctx,x,y,sz,navy,gold,sx,sy){
  for(var q=1;q<=3;q++){ctx.beginPath();ctx.arc(0,0,sz*0.28*q,0,Math.PI/2);ctx.stroke()}
  ctx.beginPath();ctx.arc(c,c,sz*0.07,0,6.3);ctx.fillStyle=gold;ctx.fill();ctx.restore();ctx.restore();
 }
+
+function drawCV(ctx,W,H,u,pal){
+ var navy=pal.title,gold=pal.accent,ink=pal.ink,serif='Amiri',nv1='#1e4a92',vip=S.tpl==='seidvip';
+ var fm=W*0.03,cx=W/2,cw=W*0.74;
+ ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(4,u*0.005);rr(ctx,fm,fm,W-2*fm,H-2*fm,u*0.02);ctx.stroke();
+ ctx.globalAlpha=0.7;ctx.lineWidth=Math.max(1.5,u*0.0018);rr(ctx,fm*1.9,fm*1.9,W-3.8*fm,H-3.8*fm,u*0.015);ctx.stroke();ctx.restore();
+ var ts=W*0.13;
+ grTile(ctx,fm*1.2,fm*1.2,ts,navy,gold,1,1);grTile(ctx,W-fm*1.2,fm*1.2,ts,navy,gold,-1,1);grTile(ctx,fm*1.2,H-fm*1.2,ts,navy,gold,1,-1);grTile(ctx,W-fm*1.2,H-fm*1.2,ts,navy,gold,-1,-1);
+ function T(txt,fam,wt,size,y,col,dir,maxW,maxL){txt=String(txt||'').trim();if(!txt)return;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction=dir;ctx.fillStyle=col;
+  var r=gpFit(ctx,fam,wt,size,txt,maxW,maxL||1);r.l.forEach(function(l,i){ctx.fillText(l,cx,y+r.s*1.28*(i-(r.l.length-1)/2))});ctx.restore()}
+ function sep(y,w){ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(cx-w/2,y);ctx.lineTo(cx-H*0.014,y);ctx.moveTo(cx+H*0.014,y);ctx.lineTo(cx+w/2,y);ctx.stroke();grRos(ctx,cx,y,H*0.0095,gold);ctx.restore()}
+ function logo(sz,y){if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,cx,y,sz,pal);ctx.restore()}}
+ if(!vip){
+  logo(W*0.66,H*0.28);
+  T(S.org,S.hf,'800',H*0.052,H*0.575,navy,'rtl',cw);T(S.orgFr,serif,'700',H*0.037,H*0.622,navy,'ltr',cw);
+  sep(H*0.662,cw*0.6);
+  var rh=H*0.088;grRib(ctx,cx-cw/2,H*0.69,cw,rh,rh*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));T(S.title,S.hf,'700',H*0.043,H*0.69+rh/2,'#fff','rtl',cw*0.76);
+  T(S.titleFr,serif,'700',H*0.031,H*0.83,navy,'ltr',cw*0.95,2);
+ }else{
+  logo(W*0.24,H*0.115);
+  T(S.org,S.bf,'700',H*0.022,H*0.235,'#8b6a14','rtl',cw);T(S.orgFr,serif,'700',H*0.02,H*0.262,'#8b6a14','ltr',cw);
+  T(S.tag,S.hf,'700',H*0.03,H*0.31,navy,'rtl',cw);
+  var gh=H*0.082;grRib(ctx,cx-cw/2,H*0.335,cw,gh,gh*0.55,'#fff0b8','#d0a53a','#b8891f',Math.max(2,u*0.003));T(S.sub,S.hf,'800',H*0.04,H*0.335+gh/2,navy,'rtl',cw*0.76);
+  T(S.tagFr,serif,'700',H*0.024,H*0.447,navy,'ltr',cw);
+  T(S.subFr,serif,'700',H*0.032,H*0.49,'#8b1a1a','ltr',cw*0.9);
+  ctx.save();ctx.strokeStyle=gold;ctx.setLineDash([4,6]);ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(cx-cw/2,H*0.512);ctx.lineTo(cx+cw/2,H*0.512);ctx.stroke();ctx.restore();
+  sep(H*0.54,cw*0.5);
+  T(S.body,S.bf,'600',H*0.0225,H*0.59,ink,'rtl',cw,2);T(S.bodyFr,serif,'600',H*0.0205,H*0.655,ink,'ltr',cw,3);
+  var icons=[calIcon,pinIcon],rh2=H*0.062;
+  [0,1].forEach(function(i){var r=(S.d&&S.d[i])||{},rf=(S.dFr&&S.dFr[i])||{};if(!String(r.v||'').trim()&&!String(rf.v||'').trim())return;
+   var ry=H*(0.715+i*0.072),px=cx-cw/2;
+   ctx.save();rr(ctx,px,ry,cw,rh2,rh2*0.3);var rg=ctx.createLinearGradient(0,ry,0,ry+rh2);rg.addColorStop(0,'#fffdf6');rg.addColorStop(1,'#f9edd0');ctx.fillStyle=rg;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.stroke();
+   var tw2=rh2*1.2;rr(ctx,px+cw-tw2,ry,tw2,rh2,rh2*0.3);var ng=ctx.createLinearGradient(0,ry,0,ry+rh2);ng.addColorStop(0,nv1);ng.addColorStop(1,navy);ctx.fillStyle=ng;ctx.fill();ctx.stroke();ctx.restore();
+   icons[i](ctx,px+cw-tw2/2,ry+rh2/2,rh2*0.6,gold);
+   ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';var tcx=px+(cw-tw2)/2;
+   ctx.direction='rtl';gpFit(ctx,S.bf,'700',rh2*0.3,String(r.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=navy;ctx.fillText(String(r.v||''),tcx,ry+rh2*0.33);
+   ctx.direction='ltr';gpFit(ctx,serif,'600',rh2*0.26,String(rf.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=ink;ctx.fillText(String(rf.v||''),tcx,ry+rh2*0.72);ctx.restore()});
+  var ph=(S.d&&S.d[3]&&String(S.d[3].v).trim())?String(S.d[3].v):'';
+  if(ph){ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction='ltr';gpFit(ctx,'Cairo','800',H*0.028,ph,cw*0.5,1);var tw=ctx.measureText(ph).width;ctx.fillStyle=navy;ctx.fillText(ph,cx+H*0.018,H*0.868);ctx.restore();phoneIcon(ctx,cx-tw/2-H*0.012,H*0.868,H*0.03,navy)}
+  var hh=H*0.066;grRib(ctx,cx-cw*0.45,H*0.9,cw*0.9,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
+  T(S.contact,S.hf,'700',H*0.022,H*0.9+hh*0.34,'#fff','rtl',cw*0.62);T(S.contactFr,serif,'600',H*0.016,H*0.9+hh*0.72,'#fff','ltr',cw*0.66);
+ }
+}
 function drawGW(ctx,W,H,u,pal){
  var navy=pal.title,gold=pal.accent,ink=pal.ink,serif='Amiri';
  var nv1='#1e4a92';
+ var IN=S.tpl==='seidinside';
  // frame
  var fm=H*0.02;
  ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(4,u*0.0055);rr(ctx,fm,fm,W-2*fm,H-2*fm,u*0.022);ctx.stroke();
  ctx.globalAlpha=0.7;ctx.lineWidth=Math.max(1.5,u*0.002);rr(ctx,fm*1.9,fm*1.9,W-3.8*fm,H-3.8*fm,u*0.016);ctx.stroke();ctx.restore();
  var ts=H*0.112;
- grTile(ctx,fm*1.2,fm*1.2,ts,navy,gold,1,1);grTile(ctx,W-fm*1.2,fm*1.2,ts,navy,gold,-1,1);grTile(ctx,fm*1.2,H-fm*1.2,ts,navy,gold,1,-1);grTile(ctx,W-fm*1.2,H-fm*1.2,ts,navy,gold,-1,-1);
+ if(!IN){grTile(ctx,fm*1.2,fm*1.2,ts,navy,gold,1,1);grTile(ctx,W-fm*1.2,fm*1.2,ts,navy,gold,-1,1);grTile(ctx,fm*1.2,H-fm*1.2,ts,navy,gold,1,-1);grTile(ctx,W-fm*1.2,H-fm*1.2,ts,navy,gold,-1,-1)}
  // logo medallion
- var ly=H*0.127,lg=H*0.19,R=lg*0.62;
- if(!logoImg){ctx.save();ctx.beginPath();ctx.arc(W/2,ly,R*1.06,0,6.3);ctx.fillStyle=pal.bg1;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(3,u*0.004);ctx.stroke();ctx.restore()}
- if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,W/2,ly,lg*1.25,pal);ctx.restore()}
+ var ly=IN?H*0.15:H*0.127,lg=H*0.19,R=lg*0.62,lgx=IN?W*0.175:W/2;
+ if(!logoImg){ctx.save();ctx.beginPath();ctx.arc(lgx,ly,R*1.06,0,6.3);ctx.fillStyle=pal.bg1;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(3,u*0.004);ctx.stroke();ctx.restore()}
+ if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,lgx,ly,lg*(IN?1.1:1.25),pal);ctx.restore()}
  var mx=W*0.07,hw=W*0.405,xa=W-mx-hw,xf=mx;
+ if(IN){var nx=W*0.74;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=navy;
+  ctx.direction='rtl';gpFit(ctx,S.hf,'800',H*0.062,S.org||'',W*0.4,1);ctx.fillText(S.org||'',nx,H*0.115);
+  ctx.direction='ltr';gpFit(ctx,serif,'700',H*0.04,S.orgFr||'',W*0.4,1);ctx.fillText(S.orgFr||'',nx,H*0.178);ctx.restore();
+  ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);var ry=H*0.222;ctx.beginPath();ctx.moveTo(W*0.07,ry);ctx.lineTo(W/2-H*0.02,ry);ctx.moveTo(W/2+H*0.02,ry);ctx.lineTo(W*0.93,ry);ctx.stroke();grRos(ctx,W/2,ry,H*0.011,gold);ctx.restore()}
  // kickers
- [[xa,S.org,'rtl',S.bf],[xf,S.orgFr,'ltr',serif]].forEach(function(k){
+ (IN?[]:[[xa,S.org,'rtl',S.bf],[xf,S.orgFr,'ltr',serif]]).forEach(function(k){
   var t=String(k[1]||'').trim();if(!t)return;var cx=k[0]+hw/2;
   ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=k[2];
   var f=gpFit(ctx,k[3],'700',H*0.046,t,hw*0.6,1);ctx.fillStyle=navy;ctx.fillText(t,cx,H*0.105);
@@ -3555,6 +3619,7 @@ function draw0(){
  ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
  var fr=drawFrame(ctx,W,H,u,pal,S.frame);
  if(S.lay==='gp'){drawGP(ctx,W,H,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
+ if(S.lay==='cv'){drawCV(ctx,W,H,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
  if(S.lay==='gw'){drawGW(ctx,W,H,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
  if(S.lay==='bi'){drawBi(ctx,W,H,u,pal,fr);drawNum(ctx,W,u,pal);$('#meta').textContent=F.n+' — '+W+'×'+H+' بكسل';return}
 
@@ -3756,7 +3821,7 @@ function syncUI(){
   if(el.type==='checkbox')el.checked=!!S[k];else el.value=S[k]==null?'':S[k];
  });
  buildDRows();buildDFrRows();buildHide();renderElUI();
- $('#biBox').style.display=(S.lay==='bi'||S.lay==='gw'||S.lay==='gp'||S.lay==='mem')?'block':'none';$('#memBox').style.display=S.lay==='mem'?'block':'none';
+ $('#biBox').style.display=(S.lay==='bi'||S.lay==='cv'||S.lay==='gw'||S.lay==='gp'||S.lay==='mem')?'block':'none';$('#memBox').style.display=S.lay==='mem'?'block':'none';
  $('#accent').value=S.accent||PAL[S.pal].accent;$('#tcol').value=S.tcol||PAL[S.pal].title;$('#bcol').value=S.bcol||PAL[S.pal].ink;$('#tshc').value=S.tshc||'#000000';
  syncChips();
 }
