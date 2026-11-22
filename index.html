@@ -3514,7 +3514,7 @@ function drawGW(ctx,W,H,u,pal){
  function col(x,dir,fam,bfam,o){
   var rtl=dir==='rtl',cx=x+hw/2;ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction=dir;
   // title ribbon
-  var ty=H*0.245,th=H*0.095;grRib(ctx,x,ty,hw,th,th*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));
+  var ty=H*0.245,th=H*0.095;if(IN)grRib(ctx,x,ty,hw,th,th*0.55,'#c9788f','#ab5b76','#082e4f',Math.max(2.5,u*0.004));else grRib(ctx,x,ty,hw,th,th*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));
   var t=gpFit(ctx,fam,'700',th*(rtl?0.58:0.5),o.title,hw*0.78,1);ctx.fillStyle='#fff';ctx.fillText(o.title,cx,ty+th/2);
   // tag pill
   var y=ty+th+H*0.012;
