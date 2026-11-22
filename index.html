@@ -3572,8 +3572,8 @@ function drawGW(ctx,W,H,u,pal){
   }
   if(o.free)y=H*0.812;
   // honor ribbon
-  var hh=H*0.062;grRib(ctx,x+hw*0.02,y,hw*0.96,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
-  var hs=gpFit(ctx,bfam,rtl?'700':'600',hh*(rtl?0.5:0.44),o.hon||'',hw*0.74,1);ctx.fillStyle='#fff';ctx.fillText(o.hon||'',cx,y+hh/2);
+  var hh=H*0.062;if(IN)grRib(ctx,x+hw*0.02,y,hw*0.96,hh,hh*0.55,'#a9dcf5','#5bb7e5','#082e4f',Math.max(2.5,u*0.0035));else grRib(ctx,x+hw*0.02,y,hw*0.96,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
+  var hs=gpFit(ctx,bfam,rtl?'700':'600',hh*(rtl?0.5:0.44),o.hon||'',hw*0.74,1);ctx.fillStyle=IN?navy:'#fff';ctx.fillText(o.hon||'',cx,y+hh/2);
   ctx.restore();
  }
  col(xf,'ltr',serif,serif,{title:S.titleFr,tag:S.tagFr,body:S.bodyFr,sub:S.subFr,rows:S.dFr||[],hon:S.contactFr,free:IN?S.freeFr:null});
