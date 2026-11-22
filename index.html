@@ -2855,11 +2855,12 @@ var TPLS=[
  {id:'seidinside',ex:true,n:'مطوية — الصفحة الداخلية (سيد القراء)',s:'A4 أفقي: عربي يمين | فرنسي يسار',fmt:'a4l',lay:'gw',own:true,logoPreset:true,pal:'seidwhite',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,
   org:'مركز سيد القراء',title:'حفل التخريج',tag:'الدفعة الثالثة للبنين والثانية للبنات',sub:'(دفعة الشيخ عمر عبد القادر جلو)',body:'تتشرّف إدارة مركز سيد القراء بدعوتكم لحضور حفل التخريج.',
   d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الوقت','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['','']],verse:'',
+  freeFr:['Le Centre Seid Al Qura’i a l’honneur de vous inviter à la cérémonie de remise des diplômes de ses étudiants,','3ᵉ promotion des garçons','(promotion Cheikh Oumar Abdoul Kader Diallo)','et 2ᵉ promotion des filles','le dimanche 6 décembre 2026','au Centre International de Conférences de Bamako (C.I.C.B.)','à partir de 9 h 00 précises'],
   free:['تسرّ إدارة مركز سيد القراء دعوتكم لحضور حفل تخريج طلابها،','الدفعة الثالثة للبنين','(دفعة الشيخ عمر عبد القادر جلو)','والثانية للبنات','وذلك يوم الأحد 6 ديسمبر 2026','في قصر المؤتمرات الدولي بباماكو (C.I.C.B)','من تمام التاسعة صباحًا (9h:00)'],
   contact:'حضوركم شرف لنا، وأهلًا وسهلًا ومرحبًا بكم',
   titleFr:'Cérémonie de remise des diplômes',tagFr:'3ᵉ promotion des garçons · 2ᵉ promotion des filles',orgFr:'Centre Seid Al Qura’i',subFr:'Promotion Cheikh Oumar Abdoul Kader Diallo',bodyFr:'La Direction du Centre Seid Al Qura’i a l’honneur de vous inviter à la cérémonie de remise des diplômes.',
   dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['','']],
-  contactFr:'Nous serions honorés de vous compter parmi nos invités.',sigTitle:'',sigName:''},
+  contactFr:'Votre présence est un honneur pour nous. Soyez les bienvenus !',sigTitle:'',sigName:''},
  {id:'seidcover',ex:true,n:'مطوية — الغلاف الأمامي (سيد القراء)',s:'شعار كبير + اسم المركز + العنوان',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'seidrose',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
   org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons',sub:'الدفعة الثانية للبنات',subFr:'(promotion Cheikh Oumar Abdoul Kader Diallo)',body:'',bodyFr:'2ᵉ promotion des filles',
   d:[['',''],['',''],['',''],['','']],dFr:[['',''],['',''],['',''],['','']],contact:'',contactFr:''},
@@ -2902,7 +2903,7 @@ function fromTpl(t,keep){
   titleFr:t.titleFr||(FR[t.id]||[])[0]||'',subFr:t.subFr||(FR[t.id]||[])[1]||'',bodyFr:t.bodyFr||(FR[t.id]||[])[2]||'',bgDim:0.5,
   lay:t.lay||'std',els:[],hide:{},logoSc:1,logoShape:'auto',logoRing:true,side:'front',flag:!!t.flag,gl:t.gl||'المكرّم/ة:',gbig:!!t.gbig,kind:'all',strip:!!t.strip,sigTitle:t.sigTitle||'',sigName:t.sigName||'',qr:'',memNo:'000001',addr:'',addrFr:'',ph1:'',ph2:'',wa:'',mail:'',web:'',guest:'',names:'',numStart:'',cols:'2',cap:!!t.cap,orgFr:t.orgFr||'',contactFr:t.contactFr||'',dFr:(t.dFr||[]).map(function(x){return {k:x[0],v:x[1]}}),
   tag:t.tag||'',tagFr:t.tagFr||'',phOn:!!t.ph,phShape:t.ph||'circle',phSz:0.2,photo:null,
-  free:t.free||null,
+  free:t.free||null,freeFr:t.freeFr||null,
   d:t.d.map(function(x){return {k:x[0],v:x[1]}})};
  while(o.d.length<6)o.d.push({k:'',v:''});
  while(o.dFr.length<4)o.dFr.push({k:'',v:''});
@@ -3568,13 +3569,13 @@ function drawGW(ctx,W,H,u,pal){
   });
   y+=step*3+H*0.004;
   }
-  if(!rtl)honY=y;if(rtl&&o.free&&honY)y=honY;
+  if(o.free)y=H*0.812;
   // honor ribbon
   var hh=H*0.062;grRib(ctx,x+hw*0.02,y,hw*0.96,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
   var hs=gpFit(ctx,bfam,rtl?'700':'600',hh*(rtl?0.5:0.44),o.hon||'',hw*0.74,1);ctx.fillStyle='#fff';ctx.fillText(o.hon||'',cx,y+hh/2);
   ctx.restore();
  }
- col(xf,'ltr',serif,serif,{title:S.titleFr,tag:S.tagFr,body:S.bodyFr,sub:S.subFr,rows:S.dFr||[],hon:S.contactFr});
+ col(xf,'ltr',serif,serif,{title:S.titleFr,tag:S.tagFr,body:S.bodyFr,sub:S.subFr,rows:S.dFr||[],hon:S.contactFr,free:IN?S.freeFr:null});
  col(xa,'rtl',S.hf,S.bf,{title:S.title,tag:S.tag,body:S.body,sub:S.sub,rows:S.d||[],hon:S.contact,free:IN?S.free:null});
  // phones
  var ph=(S.d[3]&&String(S.d[3].v).trim())?String(S.d[3].v):'';
