@@ -2860,11 +2860,14 @@ var TPLS=[
  {id:'seidcover',ex:true,n:'مطوية — الغلاف الأمامي (سيد القراء)',s:'شعار كبير + اسم المركز + العنوان',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
   org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons',sub:'الدفعة الثانية للبنات',subFr:'(promotion Cheikh Oumar Abdoul Kader Diallo)',body:'',bodyFr:'2ᵉ promotion des filles',
   d:[['',''],['',''],['',''],['','']],dFr:[['',''],['',''],['',''],['','']],contact:'',contactFr:''},
+ {id:'seidlogo',ex:true,n:'مطوية — الوجه الخلفي الأول (الشعار فقط)',s:'الشعار فقط داخل إطار',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
+  org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons',sub:'الدفعة الثانية للبنات',subFr:'(promotion Cheikh Oumar Abdoul Kader Diallo)',body:'',bodyFr:'2ᵉ promotion des filles',
+  d:[['',''],['',''],['',''],['','']],dFr:[['',''],['',''],['',''],['','']],contact:'',contactFr:''},
  {id:'seidvip',ex:true,n:'دعوة شخصية — ظهر الغلاف (سيد القراء)',s:'اسم الضيف بالعربية والفرنسية قابل للكتابة',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
-  org:'بطاقة دعوة خاصة',orgFr:'Invitation d’honneur',title:'',titleFr:'',tag:'',tagFr:'',sub:'',subFr:'',
-  body:'تتشرّف إدارة مركز سيد القراء بدعوتكم الكريمة لحضور حفل التخريج: الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو) والدفعة الثانية للبنات',bodyFr:'La Direction du Centre Seid Al Qura’i vous invite cordialement à la cérémonie de remise des diplômes de la 3ᵉ promotion des garçons (promotion Cheikh Oumar Abdoul Kader Diallo) et de la 2ᵉ promotion des filles.',
-  d:[['','الأحد 6 ديسمبر 2026م — 9:00 صباحًا'],['','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['',''],['','\u200E77 06 54 54 / 93 39 18 36\u200E']],dFr:[['','Dimanche 6 décembre 2026 — 9 h 00'],['','Centre International de Conférences de Bamako'],['',''],['','']],
-  contact:'حضوركم شرف لنا',contactFr:'Nous serions honorés de vous compter parmi nos invités.'},
+  org:'بطاقة دعوة',orgFr:'Carte d’invitation',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين',tagFr:'3ᵉ promotion des garçons (promotion Cheikh Oumar Abdoul Kader Diallo)',sub:'(دفعة الشيخ عمر عبد القادر جلو)',subFr:'',
+  body:'الدفعة الثانية للبنات',bodyFr:'2ᵉ promotion des filles',
+  d:[['','الأحد 6 ديسمبر 2026م — 9:00 صباحًا'],['','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['',''],['','']],dFr:[['','Dimanche 6 décembre 2026 — 9 h 00'],['','Centre International de Conférences de Bamako'],['',''],['','']],
+  contact:'',contactFr:''},
  {id:'seidban',ex:true,n:'لافتة 3×1.5م — سيد القراء',s:'لافتة 2:1 عربي | فرنسي',fmt:'ban3',lay:'gw',own:true,logoPreset:true,pal:'navygold',hf:'El Messiri',bf:'Cairo',pat:'stars',frame:'none',align:'center',basmala:false,
   org:'مركز سيد القراء',title:'حفل التخريج',tag:'الدفعة الثالثة للبنين والثانية للبنات',sub:'(دفعة الشيخ عمر عبد القادر جلو)',body:'تتشرّف إدارة مركز سيد القراء بدعوتكم لحضور حفل التخريج.',
   d:[['الموعد','الأحد 6 ديسمبر 2026م'],['الوقت','عند تمام الساعة التاسعة صباحًا (9:00)'],['المكان','قصر المؤتمرات الدولي بباماكو (C.I.C.B.)'],['الهاتف','\u200E77 06 54 54 / 93 39 18 36\u200E']],verse:'',
@@ -3436,7 +3439,7 @@ function drawCV(ctx,W,H,u,pal){
   var r=gpFit(ctx,fam,wt,size,txt,maxW,maxL||1);r.l.forEach(function(l,i){ctx.fillText(l,cx,y+r.s*1.28*(i-(r.l.length-1)/2))});ctx.restore()}
  function sep(y,w){ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(cx-w/2,y);ctx.lineTo(cx-H*0.014,y);ctx.moveTo(cx+H*0.014,y);ctx.lineTo(cx+w/2,y);ctx.stroke();grRos(ctx,cx,y,H*0.0095,gold);ctx.restore()}
  function logo(sz,y){if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,cx,y,sz,pal);ctx.restore()}}
- if(!vip){
+ if(S.tpl==='seidlogo'){logo(W*0.8,H*0.5)}else if(!vip){
   logo(W*0.58,H*0.245);
   T(S.org,S.hf,'800',H*0.05,H*0.52,navy,'rtl',cw);T(S.orgFr,serif,'700',H*0.035,H*0.562,navy,'ltr',cw);
   sep(H*0.597,cw*0.6);
@@ -3445,10 +3448,13 @@ function drawCV(ctx,W,H,u,pal){
   T(S.tag,S.hf,'700',H*0.0255,H*0.795,navy,'rtl',cw*0.98);T(S.sub,S.hf,'700',H*0.0255,H*0.828,navy,'rtl',cw*0.98);
   T(S.tagFr,serif,'700',H*0.0205,H*0.868,navy,'ltr',cw*0.8);T(S.subFr,serif,'700',H*0.0185,H*0.893,navy,'ltr',cw*0.9);T(S.bodyFr,serif,'700',H*0.0205,H*0.921,navy,'ltr',cw*0.8);
  }else{
-  logo(W*0.36,H*0.17);
-  T(S.org,S.bf,'700',H*0.024,H*0.335,'#8b6a14','rtl',cw);T(S.orgFr,serif,'700',H*0.021,H*0.363,'#8b6a14','ltr',cw);
-  sep(H*0.405,cw*0.5);
-  T(S.body,S.bf,'700',H*0.0245,H*0.475,ink,'rtl',cw,3);T(S.bodyFr,serif,'600',H*0.0215,H*0.585,ink,'ltr',cw,4);
+  T(S.org,S.hf,'800',H*0.04,H*0.11,'#8b6a14','rtl',cw);T(S.orgFr,serif,'700',H*0.026,H*0.147,'#8b6a14','ltr',cw);
+  sep(H*0.18,cw*0.5);
+  var vh=H*0.075;grRib(ctx,cx-cw/2,H*0.215,cw,vh,vh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));T(S.title,S.hf,'700',H*0.04,H*0.215+vh/2,'#fff','rtl',cw*0.76);
+  T(S.titleFr,serif,'700',H*0.0245,H*0.322,navy,'ltr',cw*0.95);
+  T(S.tag,S.hf,'800',H*0.03,H*0.42,navy,'rtl',cw);T(S.sub,S.hf,'700',H*0.0255,H*0.457,'#8b6a14','rtl',cw);
+  T(S.tagFr,serif,'600',H*0.0195,H*0.495,navy,'ltr',cw,2);
+  T(S.body,S.hf,'800',H*0.03,H*0.57,navy,'rtl',cw);T(S.bodyFr,serif,'600',H*0.0195,H*0.603,navy,'ltr',cw);
   var icons=[calIcon,pinIcon],rh2=H*0.062;
   [0,1].forEach(function(i){var r=(S.d&&S.d[i])||{},rf=(S.dFr&&S.dFr[i])||{};if(!String(r.v||'').trim()&&!String(rf.v||'').trim())return;
    var ry=H*(0.715+i*0.072),px=cx-cw/2;
@@ -3458,10 +3464,7 @@ function drawCV(ctx,W,H,u,pal){
    ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';var tcx=px+(cw-tw2)/2;
    ctx.direction='rtl';gpFit(ctx,S.bf,'700',rh2*0.3,String(r.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=navy;ctx.fillText(String(r.v||''),tcx,ry+rh2*0.33);
    ctx.direction='ltr';gpFit(ctx,serif,'600',rh2*0.26,String(rf.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=ink;ctx.fillText(String(rf.v||''),tcx,ry+rh2*0.72);ctx.restore()});
-  var ph=(S.d&&S.d[3]&&String(S.d[3].v).trim())?String(S.d[3].v):'';
-  if(ph){ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction='ltr';gpFit(ctx,'Cairo','800',H*0.028,ph,cw*0.5,1);var tw=ctx.measureText(ph).width;ctx.fillStyle=navy;ctx.fillText(ph,cx+H*0.018,H*0.868);ctx.restore();phoneIcon(ctx,cx-tw/2-H*0.012,H*0.868,H*0.03,navy)}
-  var hh=H*0.066;grRib(ctx,cx-cw*0.45,H*0.9,cw*0.9,hh,hh*0.55,nv1,navy,gold,Math.max(2.5,u*0.0035));
-  T(S.contact,S.hf,'700',H*0.022,H*0.9+hh*0.34,'#fff','rtl',cw*0.62);T(S.contactFr,serif,'600',H*0.016,H*0.9+hh*0.72,'#fff','ltr',cw*0.66);
+  
  }
 }
 function drawGW(ctx,W,H,u,pal){
