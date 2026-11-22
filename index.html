@@ -3470,8 +3470,8 @@ function drawCV(ctx,W,H,u,pal){
   [0,1].forEach(function(i){var r=(S.d&&S.d[i])||{},rf=(S.dFr&&S.dFr[i])||{};if(!String(r.v||'').trim()&&!String(rf.v||'').trim())return;
    var ry=H*((vip?0.775:0.715)+i*0.072),px=cx-cw/2;
    ctx.save();rr(ctx,px,ry,cw,rh2,rh2*0.3);var rg=ctx.createLinearGradient(0,ry,0,ry+rh2);rg.addColorStop(0,'#fffdf6');rg.addColorStop(1,'#f9edd0');ctx.fillStyle=rg;ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.stroke();
-   var tw2=rh2*1.2;rr(ctx,px+cw-tw2,ry,tw2,rh2,rh2*0.3);var ng=ctx.createLinearGradient(0,ry,0,ry+rh2);ng.addColorStop(0,nv1);ng.addColorStop(1,navy);ctx.fillStyle=ng;ctx.fill();ctx.stroke();ctx.restore();
-   icons[i](ctx,px+cw-tw2/2,ry+rh2/2,rh2*0.6,gold);
+   var tw2=rh2*1.2;rr(ctx,px+cw-tw2,ry,tw2,rh2,rh2*0.3);var ng=ctx.createLinearGradient(0,ry,0,ry+rh2);ng.addColorStop(0,'#d64550');ng.addColorStop(1,'#b02a37');ctx.fillStyle=ng;ctx.fill();ctx.stroke();ctx.restore();
+   icons[i](ctx,px+cw-tw2/2,ry+rh2/2,rh2*0.6,'#fff');
    ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';var tcx=px+(cw-tw2)/2;
    ctx.direction='rtl';gpFit(ctx,S.bf,'700',rh2*0.3,String(r.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=navy;ctx.fillText(String(r.v||''),tcx,ry+rh2*0.33);
    ctx.direction='ltr';gpFit(ctx,serif,'600',rh2*0.26,String(rf.v||''),(cw-tw2)*0.92,1);ctx.fillStyle=ink;ctx.fillText(String(rf.v||''),tcx,ry+rh2*0.72);ctx.restore()});
