@@ -2862,7 +2862,7 @@ var TPLS=[
   dFr:[['Date','Dimanche 6 décembre 2026'],['Heure','À 9 h 00 précises'],['Lieu','Centre International de Conférences de Bamako (C.I.C.B.)'],['','']],
   contactFr:'Votre présence est un honneur pour nous. Soyez les bienvenus !',sigTitle:'',sigName:''},
  {id:'seidcover',ex:true,n:'مطوية — الغلاف الأمامي (سيد القراء)',s:'شعار كبير + اسم المركز + العنوان',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'seidrose',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
-  org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons',sub:'الدفعة الثانية للبنات',subFr:'(promotion Cheikh Oumar Abdoul Kader Diallo)',body:'',bodyFr:'2ᵉ promotion des filles',
+  org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons (promotion Cheikh Oumar Abdoul Kader Diallo)',sub:'الدفعة الثانية للبنات (دفعة السيدة بنت صوما باسوم)',subFr:'2ᵉ promotion des filles (promotion Bintou Sôma BASSOUM)',body:'',bodyFr:'',hAr:['الأب الفخري: عمر بن الخطاب','الأم الفخرية: حفصة بنت عمر','رضي الله عنهما'],hFr:['Père d’honneur : Omar ibn al-Khattab','Mère d’honneur : Hafsa bint Omar','(qu’Allah les agrée)'],
   d:[['',''],['',''],['',''],['','']],dFr:[['',''],['',''],['',''],['','']],contact:'',contactFr:''},
  {id:'seidlogo',ex:true,n:'مطوية — الوجه الخلفي الأول (الشعار فقط)',s:'الشعار فقط داخل إطار',fmt:'a5',lay:'cv',own:true,logoPreset:true,pal:'seidrose',hf:'El Messiri',bf:'Cairo',pat:'none',frame:'none',align:'center',basmala:false,verse:'',sigTitle:'',sigName:'',
   org:'مركز سيد القراء',orgFr:'Centre Seid Al Qura’i',title:'حفل التخريج',titleFr:'Cérémonie de remise des diplômes',tag:'الدفعة الثالثة للبنين (دفعة الشيخ عمر عبد القادر جلو)',tagFr:'3ᵉ promotion des garçons',sub:'الدفعة الثانية للبنات',subFr:'(promotion Cheikh Oumar Abdoul Kader Diallo)',body:'',bodyFr:'2ᵉ promotion des filles',
@@ -2903,8 +2903,7 @@ function fromTpl(t,keep){
   titleFr:t.titleFr||(FR[t.id]||[])[0]||'',subFr:t.subFr||(FR[t.id]||[])[1]||'',bodyFr:t.bodyFr||(FR[t.id]||[])[2]||'',bgDim:0.5,
   lay:t.lay||'std',els:[],hide:{},logoSc:1,logoShape:'auto',logoRing:true,side:'front',flag:!!t.flag,gl:t.gl||'المكرّم/ة:',gbig:!!t.gbig,kind:'all',strip:!!t.strip,sigTitle:t.sigTitle||'',sigName:t.sigName||'',qr:'',memNo:'000001',addr:'',addrFr:'',ph1:'',ph2:'',wa:'',mail:'',web:'',guest:'',names:'',numStart:'',cols:'2',cap:!!t.cap,orgFr:t.orgFr||'',contactFr:t.contactFr||'',dFr:(t.dFr||[]).map(function(x){return {k:x[0],v:x[1]}}),
   tag:t.tag||'',tagFr:t.tagFr||'',phOn:!!t.ph,phShape:t.ph||'circle',phSz:0.2,photo:null,
-  free:t.free||null,freeFr:t.freeFr||null,
-  d:t.d.map(function(x){return {k:x[0],v:x[1]}})};
+  free:t.free||null,freeFr:t.freeFr||null,hAr:t.hAr||null,hFr:t.hFr||null,  d:t.d.map(function(x){return {k:x[0],v:x[1]}})};
  while(o.d.length<6)o.d.push({k:'',v:''});
  while(o.dFr.length<4)o.dFr.push({k:'',v:''});
  o.org=keep?keep.org:'اسم المسجد / المركز';
@@ -3452,13 +3451,16 @@ function drawCV(ctx,W,H,u,pal){
  function sep(y,w){ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(1.5,u*0.002);ctx.beginPath();ctx.moveTo(cx-w/2,y);ctx.lineTo(cx-H*0.014,y);ctx.moveTo(cx+H*0.014,y);ctx.lineTo(cx+w/2,y);ctx.stroke();grRos(ctx,cx,y,H*0.0095,gold);ctx.restore()}
  function logo(sz,y){if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,cx,y,sz,pal);ctx.restore()}}
  if(S.tpl==='seidlogo'){logo(W*0.8,H*0.5)}else if(!vip){
-  logo(W*0.58,H*0.245);
-  T(S.org,S.hf,'800',H*0.05,H*0.52,navy,'rtl',cw);T(S.orgFr,serif,'700',H*0.035,H*0.562,navy,'ltr',cw);
-  sep(H*0.597,cw*0.6);
-  var rh=H*0.08;grRib(ctx,cx-cw/2,H*0.62,cw,rh,rh*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));T(S.title,S.hf,'700',H*0.043,H*0.62+rh/2,'#fff','rtl',cw*0.76);
-  T(S.titleFr,serif,'700',H*0.03,H*0.745,navy,'ltr',cw*0.95,1);
-  T(S.tag,S.hf,'700',H*0.0255,H*0.795,navy,'rtl',cw*0.98);T(S.sub,S.hf,'700',H*0.0255,H*0.828,navy,'rtl',cw*0.98);
-  T(S.tagFr,serif,'700',H*0.0205,H*0.868,navy,'ltr',cw*0.8);T(S.subFr,serif,'700',H*0.0185,H*0.893,navy,'ltr',cw*0.9);T(S.bodyFr,serif,'700',H*0.0205,H*0.921,navy,'ltr',cw*0.8);
+  logo(W*0.5,H*0.205);
+  T(S.org,S.hf,'800',H*0.045,H*0.437,navy,'rtl',cw);T(S.orgFr,serif,'700',H*0.03,H*0.475,navy,'ltr',cw);
+  sep(H*0.505,cw*0.6);
+  var rh=H*0.07;grRib(ctx,cx-cw/2,H*0.525,cw,rh,rh*0.55,nv1,navy,gold,Math.max(2.5,u*0.004));T(S.title,S.hf,'700',H*0.038,H*0.525+rh/2,'#fff','rtl',cw*0.76);
+  T(S.titleFr,serif,'700',H*0.027,H*0.615,navy,'ltr',cw*0.95,1);
+  T(S.tag,S.hf,'700',H*0.0235,H*0.66,navy,'rtl',cw*0.98);T(S.sub,S.hf,'700',H*0.0235,H*0.69,navy,'rtl',cw*0.98);
+  T(S.tagFr,serif,'700',H*0.0165,H*0.72,navy,'ltr',cw*0.98);T(S.subFr,serif,'700',H*0.0165,H*0.742,navy,'ltr',cw*0.98);
+  if(S.hAr){var hy=H*0.775,hh2=H*0.09;grRib(ctx,cx-cw*0.46,hy,cw*0.92,hh2,hh2*0.5,'#f7dfe3','#ab5b76','#8f4560',Math.max(2,u*0.003));
+   T(S.hAr[0],S.hf,'700',H*0.0225,hy+hh2*0.3,navy,'rtl',cw*0.8);T(S.hAr[1]+' — '+S.hAr[2],S.hf,'700',H*0.0225,hy+hh2*0.7,navy,'rtl',cw*0.82);
+   T(S.hFr[0],serif,'700',H*0.0165,H*0.885,'#630b24','ltr',cw*0.9);T(S.hFr[1]+' '+S.hFr[2],serif,'700',H*0.0165,H*0.907,'#630b24','ltr',cw*0.96)}
  }else{
   T(S.org,S.hf,'800',H*0.04,H*0.11,'#8b6a14','rtl',cw);T(S.orgFr,serif,'700',H*0.026,H*0.147,'#8b6a14','ltr',cw);
   sep(H*0.18,cw*0.5);
