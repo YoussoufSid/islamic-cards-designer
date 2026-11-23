@@ -3440,8 +3440,17 @@ var SEID_FRAME=null;(function(){var im=new Image();im.onload=function(){SEID_FRA
 function drawCV(ctx,W,H,u,pal){
  var navy=pal.title,gold=pal.accent,ink=pal.ink,serif='Amiri',nv1='#1c415a',vip=S.tpl==='seidvip';
  var fm=W*0.03,cx=W/2,cw=W*0.74;
- if(S.tpl==='seidlogo'){ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore();if(SEID_FRAME)ctx.drawImage(SEID_FRAME,0,0,W,H);if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,W/2,H*0.355,W*0.646,pal);ctx.restore()}if(STU_G&&STU_B){var pw=W*0.27,ph=pw*47/40,gp=W*0.108,py=H*0.712-ph/2,xs=[W/2-gp/2-pw,W/2+gp/2],im2=[STU_G,STU_B];im2.forEach(function(im,k){ctx.save();rr(ctx,xs[k],py,pw,ph,W*0.02);ctx.clip();ctx.drawImage(im,xs[k],py,pw,ph);ctx.restore();ctx.save();ctx.strokeStyle='#041c4e';ctx.lineWidth=Math.max(3,W*0.005);rr(ctx,xs[k],py,pw,ph,W*0.02);ctx.stroke();ctx.restore()})}
- {ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='ltr';ctx.fillStyle=pal.title;var pf=gpFit(ctx,'Cairo','800',W*0.05,'77 06 54 54  /  93 39 18 36',W*0.72,1);ctx.fillText('77 06 54 54  /  93 39 18 36',W/2,H*0.857);ctx.restore()}return}
+ if(S.tpl==='seidlogo'){ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore();if(SEID_FRAME)ctx.drawImage(SEID_FRAME,0,0,W,H);var lcx=W/2,rw=W*0.72,rh0=H*0.078,ry0=H*0.083;grRib(ctx,lcx-rw/2,ry0,rw,rh0,rh0*0.55,'#c9788f','#ab5b76','#082e4f',Math.max(2.5,W*0.004));
+ function LT(t,fam,wt,sz,y,col,dir,mw){ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction=dir;ctx.fillStyle=col;gpFit(ctx,fam,wt,sz,t,mw,1);ctx.fillText(t,lcx,y);ctx.restore()}
+ LT('حفل التخريج',S.hf,'800',H*0.052,ry0+rh0/2,'#fff','rtl',rw*0.7);
+ LT('Cérémonie de remise des diplômes',serif,'700',H*0.0275,H*0.195,'#082e4f','ltr',W*0.78);
+ if(logoImg){ctx.save();ctx.globalCompositeOperation='multiply';drawLogo(ctx,logoImg,lcx,H*0.452,W*0.62,pal);ctx.restore()}
+ LT('الأب الفخري: عمر بن الخطاب',S.hf,'800',H*0.0255,H*0.725,'#082e4f','rtl',W*0.7);
+ LT('الأم الفخرية: حفصة بنت عمر',S.hf,'800',H*0.0255,H*0.76,'#082e4f','rtl',W*0.7);
+ LT('رضي الله عنهما',S.hf,'700',H*0.0255,H*0.795,'#8b2f50','rtl',W*0.7);
+ LT('Parrain : Oumarou Ibni Khatab',serif,'700',H*0.0215,H*0.835,'#630b24','ltr',W*0.7);
+ LT('Marraine : Hafsatou Bintou Oumar',serif,'700',H*0.0215,H*0.862,'#630b24','ltr',W*0.7);
+ return}
  if(S.tpl==='seidvip'){ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore();if(SEID_FRAME2)ctx.drawImage(SEID_FRAME2,0,0,W,H);ctx.save()}else{ctx.save();ctx.strokeStyle=gold;ctx.lineWidth=Math.max(4,u*0.005);rr(ctx,fm,fm,W-2*fm,H-2*fm,u*0.02);ctx.stroke()}
  ctx.restore();
  var ts=W*0.13;
